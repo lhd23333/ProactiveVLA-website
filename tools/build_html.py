@@ -154,7 +154,7 @@ def build_ledger(ledger: dict, manifest: dict, instructions: dict) -> str:
     </ul>
   </div>
 </div>
-<p class="ledger-total">Across the {len(scenes)} scenes the agent proposed {len(allv)} goals: {allv.count("passed")} passed, {allv.count("failed")} failed and {allv.count("uncertain")} were uncertain. Pass rates fall with level: {ratio[1]} at Level 1, {ratio[2]} at Level 2 and {ratio[3]} at Level 3. Failed and uncertain attempts are archived as evidence too.</p>
+        <p class="ledger-total">{len(allv)} goals: {allv.count("passed")} passed, {allv.count("failed")} failed, {allv.count("uncertain")} uncertain. Pass rate falls with level: {ratio[1]} (L1), {ratio[2]} (L2), {ratio[3]} (L3).</p>
 <details class="table-view">
   <summary>Show the ledger as a table</summary>
   <div class="table-wrap" role="region" aria-labelledby="ledger-table-caption" tabindex="0">
