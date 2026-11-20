@@ -361,7 +361,7 @@ VIDEO_TABS = [
     ("spatial-t", "Spatial-T", "libero_spatial_task", "LIBERO-Spatial with instruction redirection", 85),
     ("l10-s", "LIBERO-10-S", "libero_10_swap", "LIBERO-10 with position swap", 58),
 ]
-H2H_LEAD = ("Same Goal-T task, same seed, same turn budget. In each pair, Harness VLA fails and ProactiveVLA succeeds.")
+H2H_LEAD = ("Same task, seed and budget: Harness VLA fails, ProactiveVLA succeeds.")
 H2H_DISCLOSURE = (
     "These pairs come from our own re-run of Goal-T, separate from the evaluation in Table 1. "
     "They are every task and seed in that re-run where ProactiveVLA succeeded and Harness VLA failed. "
@@ -375,13 +375,13 @@ def clip_caption(ins: str, task: int, seed: int) -> str:
 
 def build_single_panel(group: str, suite: str, setting: str, rate: int, clips: list, instructions: dict) -> str:
     n = len(clips)
-    shown = "one successful rollout for each of the 10 tasks" if n == 10 else f"successful rollouts for {n} of the 10 tasks"
+    shown = "10 of 10 tasks" if n == 10 else f"{n} of 10 tasks"
     items = "\n".join(
         f'  <li><figure class="clip">{video_tag(group, c["name"])}'
         f'<figcaption>{clip_caption(instruction(instructions, suite, c["task"]), c["task"], c["seed"])}</figcaption></figure></li>'
         for c in sorted(clips, key=lambda c: c["task"])
     )
-    lead = f"{setting}. ProactiveVLA succeeds in {rate}% of rollouts in this setting. Shown here: {shown}."
+    lead = f"{setting} &middot; {rate}% success &middot; {shown}."
     return f'<p class="panel-lead">{lead}</p>\n<ul class="clip-grid" role="list">\n{items}\n</ul>'
 
 

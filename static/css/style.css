@@ -789,6 +789,90 @@
   }
   .flow-stat b { color: var(--ink); font-variant-numeric: tabular-nums; }
 
+  /* 摘要：一句判断 + 三步链 + 一行结果，取代两段论文摘要 */
+  .abstract-lead {
+    max-width: 34ch;
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.125rem);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .abstract-chain {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+    gap: 1px;
+    margin-block-start: 1.5rem;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-m);
+    background: var(--rule);
+    list-style: none;
+  }
+  .abstract-chain li {
+    padding: 1rem 1.125rem 1.125rem;
+    background: var(--paper);
+    color: var(--ink-2);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    line-height: 1.45;
+  }
+  .chain-key { display: block; color: var(--accent-ink); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; }
+  .abstract-chain b { display: block; margin-block: 0.25rem 0.375rem; color: var(--ink); font-size: 1rem; }
+  .abstract-result {
+    margin-block-start: 1.25rem;
+    color: var(--ink-2);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+  }
+  .abstract-result b { color: var(--ink); font-size: 1.125rem; white-space: nowrap; }
+
+  /* 方法：四张卡片对齐图 1 的 A–D 面板，宽屏一行四列 */
+  .stages.stages-compact {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+    max-width: none;
+  }
+  .stages-compact .stage {
+    padding: 1rem 1.125rem 1.125rem;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-m);
+    background: var(--paper);
+    box-shadow: inset 0 3px 0 var(--tint);
+  }
+  .stages-compact .stage > * + * { margin-block-start: 0.5rem; }
+  .stages-compact .stage h3 { display: flex; align-items: center; gap: 0.5rem; font-size: 1rem; line-height: 1.25; }
+  .stages-compact .stage-key {
+    position: static;
+    width: 1.75rem;
+    height: 1.75rem;
+    font-size: 0.9375rem;
+  }
+  .stages-compact .stage p { color: var(--ink-2); font-size: 0.875rem; line-height: 1.45; }
+  .stages-compact .levels { gap: 0.375rem; margin-block-start: 0.5rem; }
+  .stages-compact .levels > div { padding-inline-start: 0.625rem; }
+  .stages-compact .levels dt { font-size: 0.8125rem; }
+  .stages-compact .levels dd { display: none; }
+  .mini-flow {
+    display: grid;
+    gap: 0.15rem;
+    margin-block-start: 0.5rem;
+    padding-inline-start: 1.1rem;
+    list-style: none;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+  .mini-flow li { list-style: decimal; padding-inline-start: 0.15rem; }
+  .mini-flow li::marker { color: var(--ink-3); font-variant-numeric: tabular-nums; }
+  @media (width < 64rem) {
+    .stages.stages-compact { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (width < 40rem) {
+    .stages.stages-compact { grid-template-columns: minmax(0, 1fr); }
+  }
+
   /* 方法四步，字母与图 1 的面板一一对应，色块取自图中面板底色 */
   .stages { display: grid; gap: 2.25rem; max-width: 52rem; margin-block-start: 2.5rem; }
   .stage { position: relative; padding-inline-start: 3.25rem; }

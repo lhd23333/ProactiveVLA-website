@@ -84,7 +84,7 @@
     <div class="hero-scrim" aria-hidden="true"></div>
     <div class="hero-inner">
       <h1 class="title" id="title"><span class="title-name">ProactiveVLA</span><span class="visually-hidden">: </span><span class="title-sub">Augmenting Embodied Memory through Proactive Environment Exploration</span></h1>
-      <p class="hero-summary">After finishing the task it was given, the agent spends the turns it has left on goals it proposes for itself. An independent checker grades every attempt, and the lessons that survive review become a fixed memory for later tasks.</p>
+      <p class="hero-summary">After the given task, the agent spends its remaining turns on self-proposed goals. A checker grades each attempt, and reviewed lessons become fixed memory.</p>
       <div class="byline">
         <ul class="authors" role="list">
           <li>Shizuo Tian<sup>1*</sup></li>
@@ -107,7 +107,7 @@
   </section>
   <section class="section" id="exploration" aria-labelledby="exploration-title" tabindex="-1">
     <h2 id="exploration-title">What the agent does with its spare turns</h2>
-    <p class="lead">In each of these ten LIBERO-Pro Spatial-T scenes, the agent first works on the task it was given, then spends the remaining turns on goals it proposes for itself. Each mark is one of those goals, graded by the visual checker. Pick a scene to watch its run.</p>
+    <p class="lead">Ten Spatial-T scenes: finish the given task, then spend leftover turns on self-proposed goals. Pick a scene to watch.</p>
     <!-- build:ledger -->
     <div class="ledger">
       <figure class="ledger-player">
@@ -238,10 +238,13 @@
   </section>
   <section class="section band" id="abstract" aria-labelledby="abstract-title" tabindex="-1">
     <h2 id="abstract-title">Abstract</h2>
-    <div class="prose-body">
-      <p>Rapid adaptation to a new environment requires a robot to acquire useful knowledge about local objects, states, and interactions from limited experience. Systems that combine a reasoning agent with a frozen vision-language-action model (VLA) can adapt through execution feedback and memory, making the choice of experience central to their effectiveness. Repeated practice of a target task may refine a familiar solution while leaving other interactions relevant to changed conditions untested.</p>
-      <p>We introduce ProactiveVLA, which uses proactive environment exploration to acquire reusable knowledge for deployment-time adaptation. After completing an initial task, the agent allocates the remaining interaction budget to self-proposed goals covering object affordances, state-changing interactions, and compositions of interactions. It verifies execution outcomes and consolidates both task-directed and exploratory experience into memory that guides subsequent planning and control. ProactiveVLA outperforms the baselines under the same turn budget on LIBERO-Pro and RoboCasa365 Composite-Seen. On LIBERO-Pro Goal-T, with at most one VLA primitive invocation allowed during evaluation, ProactiveVLA completes 48% of instances, compared with 19% for the state-of-the-art task-refinement baseline.</p>
-    </div>
+    <p class="abstract-lead">Adaptation depends on what the agent experiences.</p>
+    <ol class="abstract-chain" role="list">
+      <li><span class="chain-key">01</span><b>Explore</b><span>Spend the turns left after the given task on goals it proposes: affordances, state changes, and compositions.</span></li>
+      <li><span class="chain-key">02</span><b>Verify</b><span>An independent visual checker grades every attempt; failures and recoveries are kept as evidence.</span></li>
+      <li><span class="chain-key">03</span><b>Remember</b><span>Reviewed rules become a frozen global memory that guides later tasks and variants.</span></li>
+    </ol>
+    <p class="abstract-result"><b>76.4%</b> LIBERO-Pro &middot; <b>41.3%</b> RoboCasa365 &middot; <b>48% vs 19%</b> with one VLA call</p>
   </section>
 
   <section class="section" id="method" aria-labelledby="method-title" tabindex="-1">
@@ -252,38 +255,36 @@
         <img src="static/images/architecture-1200.webp" srcset="static/images/architecture-1200.webp 1200w, static/images/architecture-2000.webp 2000w" sizes="(min-width: 80rem) 72rem, 92vw" width="1200" height="673" loading="lazy" decoding="async" alt="Four-panel overview. A: scene setup with the task provided by the environment. B: self-exploration, where proposed goals are executed and graded by a visual checker. C: memory management, from complete interaction records to reviewed rules. D: the frozen global memory guiding new tasks and variants.">
         <span class="visually-hidden">Open the figure at full size</span>
       </a>
-      <figcaption><span class="fig-label">Figure 1.</span> Overview of ProactiveVLA. After completing the environment-provided task, the agent uses the remaining interaction budget to explore scene-related goals involving object affordances, state-changing interactions, and interaction compositions. An independent visual checker assesses exploratory outcomes and supplies feedback for continued exploration. Memory management preserves the complete interaction records, organizes experience within scenes, synthesizes knowledge across scenes, and independently reviews candidate rules. Accepted rules form a frozen global memory that guides execution across tasks and variants.</figcaption>
+      <figcaption><span class="fig-label">Figure 1.</span> Overview. Given task first, then self-proposed goals at three levels; a visual checker grades attempts; reviewed rules become frozen memory.</figcaption>
     </figure>
-    <ol class="stages" role="list">
+    <ol class="stages stages-compact" role="list">
       <li class="stage" style="--tint: #e7edf3">
         <h3><span class="stage-key" aria-hidden="true">A</span>Scene setup</h3>
-        <p>Each instance has a shared budget of turns. The agent first attempts the task the environment provides, acting through robot primitives: moving to a target pose, adjusting posture, controlling the gripper and calling a frozen VLA.</p>
+        <p>One shared turn budget; try the given task first.</p>
       </li>
       <li class="stage" style="--tint: #fbe2d6">
         <h3><span class="stage-key" aria-hidden="true">B</span>Self-exploration</h3>
-        <p>The turns that remain go to goals that a language-model proposer derives from the observed scene and the feedback so far. The paper gives these examples for the three levels:</p>
+        <p>Leftover turns go to goals a language-model proposer derives from the scene.</p>
         <dl class="levels">
-          <div><dt>Level 1: object affordances</dt><dd>“grasping a bowl, opening a cabinet door, or pressing a faucet control”</dd></div>
-          <div><dt>Level 2: state-changing interactions</dt><dd>“place the bowl into the already opened top drawer and verify that the bowl is stably contained inside”</dd></div>
-          <div><dt>Level 3: interaction compositions</dt><dd>“pick up a vegetable, rinse it under running water, transfer it into a bowl, and then complete the final placement”</dd></div>
+          <div><dt>L1 object affordances</dt><dd>grasping a bowl, opening a cabinet door</dd></div>
+          <div><dt>L2 state changes</dt><dd>place the bowl into the opened drawer and verify it is stably contained</dd></div>
+          <div><dt>L3 compositions</dt><dd>pick up a vegetable, rinse it, transfer it into a bowl</dd></div>
         </dl>
-        <p>An independent visual checker grades each attempt. Successes, failures, uncertain outcomes and recoveries are all kept. After an ordinary failure the agent changes strategy and continues from the current state, without resetting the scene.</p>
       </li>
       <li class="stage" style="--tint: #fcf0cf">
         <h3><span class="stage-key" aria-hidden="true">C</span>Memory management</h3>
-        <p>Experience from the given task and from exploration is consolidated in five steps:</p>
-        <ol class="pipeline">
-          <li>Lossless archival of every recorded trajectory</li>
-          <li>Experience atomization into individual units</li>
-          <li>Within-scene induction of object, action and composition knowledge</li>
-          <li>Cross-scene synthesis into candidate rules</li>
-          <li>Independent evidence review by a critic</li>
+        <p>Five steps turn raw trajectories into reviewed rules.</p>
+        <ol class="mini-flow" role="list">
+          <li>Archive</li>
+          <li>Atomize</li>
+          <li>Induce</li>
+          <li>Synthesize</li>
+          <li>Review</li>
         </ol>
-        <p>Only rules that pass the review enter the global memory.</p>
       </li>
       <li class="stage" style="--tint: #f1ead6">
         <h3><span class="stage-key" aria-hidden="true">D</span>Generalization</h3>
-        <p>At evaluation time, the global memory is placed in the agent’s context together with the task instruction and current observations. The memory and the VLA parameters stay fixed.</p>
+        <p>Frozen memory and frozen VLA at test time.</p>
       </li>
     </ol>
   </section>
@@ -360,7 +361,7 @@
         <div class="plate"><img src="static/images/goal-t-budget.svg" width="488" height="331" loading="lazy" decoding="async" alt="Line chart (a): Goal-T success rate against the maximum number of VLA calls allowed. With one call, ProactiveVLA completes 48% and Harness VLA 19%; the gap narrows as more calls are allowed."></div>
         <div class="plate"><img src="static/images/goal-s-ablation-budget.svg" width="488" height="331" loading="lazy" decoding="async" alt="Line chart (b): Goal-S success rate against the maximum number of VLA calls, for ProactiveVLA and three ablations. The variant without three-level exploration stays lowest at every budget and ends at 42%, against 71% for the full method."></div>
       </div>
-      <figcaption><span class="fig-label">Figure 2.</span> Task success as a function of the maximum number of VLA primitive invocations allowed during evaluation. (a) ProactiveVLA has its largest advantage over Harness VLA when only a few VLA calls are available. (b) Structured three-level exploration contributes most strongly to this low-budget execution capability.</figcaption>
+      <figcaption><span class="fig-label">Figure 2.</span> Success vs. maximum VLA calls. (a) Largest gain at low budget. (b) Removing three-level exploration hurts most.</figcaption>
     </figure>
 
     <h3 id="robocasa">RoboCasa365 Composite-Seen</h3>
@@ -525,13 +526,13 @@
         </div>
         <!-- /build:occlusion -->
       </div>
-      <figcaption><span class="fig-label">Figure 3.</span> Execution under target occlusion. Both agents move the arm after the target becomes occluded. ProactiveVLA re-localizes before resuming the task and succeeds, while Harness VLA skips re-localization, acts at the wrong position, and fails.</figcaption>
+      <figcaption><span class="fig-label">Figure 3.</span> Occlusion case. Both move the arm; only ProactiveVLA re-localizes, then succeeds.</figcaption>
     </figure>
   </section>
 
   <section class="section band" id="videos" aria-labelledby="videos-title" tabindex="-1">
     <h2 id="videos-title">Videos</h2>
-    <p class="lead">LIBERO-Pro simulation rollouts. Clips play while they are on screen unless your system is set to reduce motion, and every clip has its own controls.</p>
+    <p class="lead">LIBERO-Pro rollouts; clips autoplay on screen unless reduced motion is on.</p>
     <!-- build:videos -->
     <div class="tabs">
       <div class="tablist" role="tablist" aria-label="Rollout videos by setting">
@@ -543,7 +544,7 @@
         <button type="button" role="tab" id="tab-h2h" aria-selected="false" tabindex="-1">Head-to-head</button>
       </div>
       <div class="tabpanel" role="tabpanel" id="panel-goal-t" aria-labelledby="tab-goal-t">
-      <p class="panel-lead">LIBERO-Goal with instruction redirection. ProactiveVLA succeeds in 88% of rollouts in this setting. Shown here: one successful rollout for each of the 10 tasks.</p>
+      <p class="panel-lead">LIBERO-Goal with instruction redirection &middot; 88% success &middot; 10 of 10 tasks.</p>
       <ul class="clip-grid" role="list">
         <li><figure class="clip"><video data-autoplay controls muted loop playsinline preload="none" loading="lazy" width="256" height="256" poster="static/posters/goal-t/task-00-seed-09.webp" src="static/videos/goal-t/task-00-seed-09.mp4"></video><figcaption><span>Open the bottom drawer of the cabinet</span><span class="clip-meta">Task 0, seed 9</span></figcaption></figure></li>
         <li><figure class="clip"><video data-autoplay controls muted loop playsinline preload="none" loading="lazy" width="256" height="256" poster="static/posters/goal-t/task-01-seed-01.webp" src="static/videos/goal-t/task-01-seed-01.mp4"></video><figcaption><span>Put the plate on the stove</span><span class="clip-meta">Task 1, seed 1</span></figcaption></figure></li>
@@ -558,7 +559,7 @@
       </ul>
       </div>
       <div class="tabpanel" role="tabpanel" id="panel-object-t" aria-labelledby="tab-object-t" hidden="until-found">
-      <p class="panel-lead">LIBERO-Object with instruction redirection. ProactiveVLA succeeds in 98% of rollouts in this setting. Shown here: successful rollouts for 6 of the 10 tasks.</p>
+      <p class="panel-lead">LIBERO-Object with instruction redirection &middot; 98% success &middot; 6 of 10 tasks.</p>
       <ul class="clip-grid" role="list">
         <li><figure class="clip"><video data-autoplay controls muted loop playsinline preload="none" loading="lazy" width="256" height="256" poster="static/posters/object-t/task-00-seed-09.webp" src="static/videos/object-t/task-00-seed-09.mp4"></video><figcaption><span>Pick the cream cheese and place it in the basket</span><span class="clip-meta">Task 0, seed 9</span></figcaption></figure></li>
         <li><figure class="clip"><video data-autoplay controls muted loop playsinline preload="none" loading="lazy" width="256" height="256" poster="static/posters/object-t/task-01-seed-04.webp" src="static/videos/object-t/task-01-seed-04.mp4"></video><figcaption><span>Pick the alphabet soup and place it in the basket</span><span class="clip-meta">Task 1, seed 4</span></figcaption></figure></li>
@@ -569,7 +570,7 @@
       </ul>
       </div>
       <div class="tabpanel" role="tabpanel" id="panel-object-s" aria-labelledby="tab-object-s" hidden="until-found">
-      <p class="panel-lead">LIBERO-Object with position swap. ProactiveVLA succeeds in 92% of rollouts in this setting. Shown here: one successful rollout for each of the 10 tasks.</p>
+      <p class="panel-lead">LIBERO-Object with position swap &middot; 92% success &middot; 10 of 10 tasks.</p>
       <ul class="clip-grid" role="list">
         <li><figure class="clip"><video data-autoplay controls muted loop playsinline preload="none" loading="lazy" width="256" height="256" poster="static/posters/object-s/task-00-seed-01.webp" src="static/videos/object-s/task-00-seed-01.mp4"></video><figcaption><span>Pick the alphabet soup and place it in the basket</span><span class="clip-meta">Task 0, seed 1</span></figcaption></figure></li>
         <li><figure class="clip"><video data-autoplay controls muted loop playsinline preload="none" loading="lazy" width="256" height="256" poster="static/posters/object-s/task-01-seed-09.webp" src="static/videos/object-s/task-01-seed-09.mp4"></video><figcaption><span>Pick the cream cheese and place it in the basket</span><span class="clip-meta">Task 1, seed 9</span></figcaption></figure></li>
@@ -584,7 +585,7 @@
       </ul>
       </div>
       <div class="tabpanel" role="tabpanel" id="panel-spatial-t" aria-labelledby="tab-spatial-t" hidden="until-found">
-      <p class="panel-lead">LIBERO-Spatial with instruction redirection. ProactiveVLA succeeds in 85% of rollouts in this setting. Shown here: successful rollouts for 4 of the 10 tasks.</p>
+      <p class="panel-lead">LIBERO-Spatial with instruction redirection &middot; 85% success &middot; 4 of 10 tasks.</p>
       <ul class="clip-grid" role="list">
         <li><figure class="clip"><video data-autoplay controls muted loop playsinline preload="none" loading="lazy" width="256" height="256" poster="static/posters/spatial-t/task-01-seed-08.webp" src="static/videos/spatial-t/task-01-seed-08.mp4"></video><figcaption><span>Pick the akita black bowl next to the cookie box and place it on the plate</span><span class="clip-meta">Task 1, seed 8</span></figcaption></figure></li>
         <li><figure class="clip"><video data-autoplay controls muted loop playsinline preload="none" loading="lazy" width="256" height="256" poster="static/posters/spatial-t/task-02-seed-10.webp" src="static/videos/spatial-t/task-02-seed-10.mp4"></video><figcaption><span>Pick the akita black bowl next to the plate and place it on the plate</span><span class="clip-meta">Task 2, seed 10</span></figcaption></figure></li>
@@ -593,14 +594,14 @@
       </ul>
       </div>
       <div class="tabpanel" role="tabpanel" id="panel-l10-s" aria-labelledby="tab-l10-s" hidden="until-found">
-      <p class="panel-lead">LIBERO-10 with position swap. ProactiveVLA succeeds in 58% of rollouts in this setting. Shown here: successful rollouts for 2 of the 10 tasks.</p>
+      <p class="panel-lead">LIBERO-10 with position swap &middot; 58% success &middot; 2 of 10 tasks.</p>
       <ul class="clip-grid" role="list">
         <li><figure class="clip"><video data-autoplay controls muted loop playsinline preload="none" loading="lazy" width="256" height="256" poster="static/posters/l10-s/task-02-seed-02.webp" src="static/videos/l10-s/task-02-seed-02.mp4"></video><figcaption><span>Turn on the stove and put the moka pot on it</span><span class="clip-meta">Task 2, seed 2</span></figcaption></figure></li>
         <li><figure class="clip"><video data-autoplay controls muted loop playsinline preload="none" loading="lazy" width="256" height="256" poster="static/posters/l10-s/task-05-seed-01.webp" src="static/videos/l10-s/task-05-seed-01.mp4"></video><figcaption><span>Pick up the book and place it in the back compartment of the caddy</span><span class="clip-meta">Task 5, seed 1</span></figcaption></figure></li>
       </ul>
       </div>
       <div class="tabpanel" role="tabpanel" id="panel-h2h" aria-labelledby="tab-h2h" hidden="until-found">
-      <p class="panel-lead">Same Goal-T task, same seed, same turn budget. In each pair, Harness VLA fails and ProactiveVLA succeeds.</p>
+      <p class="panel-lead">Same task, seed and budget: Harness VLA fails, ProactiveVLA succeeds.</p>
       <p class="disclosure">These pairs come from our own re-run of Goal-T, separate from the evaluation in Table 1. They are every task and seed in that re-run where ProactiveVLA succeeded and Harness VLA failed. The reverse happened in 7 cases: task 0 seed 10, task 2 seeds 2 and 5, task 5 seeds 2, 9 and 10, and task 6 seed 4.</p>
       <ul class="pair-grid" role="list">
         <li class="pair">
