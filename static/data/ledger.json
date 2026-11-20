@@ -1,0 +1,356 @@
+{
+ "suite": "LIBERO-Pro Spatial-T",
+ "seed": 0,
+ "scenes": [
+  {
+   "scene": 0,
+   "attempts": 1,
+   "target_turns": 14,
+   "explore_turns": 71,
+   "stop": "coverage_complete",
+   "goals": [
+    {
+     "level": 1,
+     "verdict": "passed"
+    },
+    {
+     "level": 1,
+     "verdict": "failed"
+    },
+    {
+     "level": 1,
+     "verdict": "passed"
+    },
+    {
+     "level": 2,
+     "verdict": "passed"
+    },
+    {
+     "level": 2,
+     "verdict": "failed"
+    },
+    {
+     "level": 3,
+     "verdict": "failed"
+    },
+    {
+     "level": 3,
+     "verdict": "passed"
+    }
+   ]
+  },
+  {
+   "scene": 1,
+   "attempts": 3,
+   "target_turns": 50,
+   "explore_turns": 46,
+   "stop": "turn_budget",
+   "goals": [
+    {
+     "level": 1,
+     "verdict": "failed"
+    },
+    {
+     "level": 1,
+     "verdict": "uncertain"
+    },
+    {
+     "level": 1,
+     "verdict": "failed"
+    },
+    {
+     "level": 2,
+     "verdict": "passed"
+    },
+    {
+     "level": 2,
+     "verdict": "uncertain"
+    }
+   ]
+  },
+  {
+   "scene": 2,
+   "attempts": 1,
+   "target_turns": 13,
+   "explore_turns": 74,
+   "stop": "coverage_complete",
+   "goals": [
+    {
+     "level": 1,
+     "verdict": "passed"
+    },
+    {
+     "level": 1,
+     "verdict": "failed"
+    },
+    {
+     "level": 1,
+     "verdict": "failed"
+    },
+    {
+     "level": 2,
+     "verdict": "failed"
+    },
+    {
+     "level": 2,
+     "verdict": "failed"
+    },
+    {
+     "level": 3,
+     "verdict": "passed"
+    },
+    {
+     "level": 3,
+     "verdict": "failed"
+    }
+   ]
+  },
+  {
+   "scene": 3,
+   "attempts": 1,
+   "target_turns": 15,
+   "explore_turns": 72,
+   "stop": "coverage_complete",
+   "goals": [
+    {
+     "level": 1,
+     "verdict": "passed"
+    },
+    {
+     "level": 1,
+     "verdict": "passed"
+    },
+    {
+     "level": 1,
+     "verdict": "failed"
+    },
+    {
+     "level": 2,
+     "verdict": "passed"
+    },
+    {
+     "level": 2,
+     "verdict": "failed"
+    },
+    {
+     "level": 3,
+     "verdict": "failed"
+    }
+   ]
+  },
+  {
+   "scene": 4,
+   "attempts": 2,
+   "target_turns": 38,
+   "explore_turns": 53,
+   "stop": "coverage_complete",
+   "goals": [
+    {
+     "level": 1,
+     "verdict": "failed"
+    },
+    {
+     "level": 1,
+     "verdict": "failed"
+    },
+    {
+     "level": 1,
+     "verdict": "passed"
+    },
+    {
+     "level": 2,
+     "verdict": "passed"
+    },
+    {
+     "level": 2,
+     "verdict": "failed"
+    },
+    {
+     "level": 3,
+     "verdict": "failed"
+    }
+   ]
+  },
+  {
+   "scene": 5,
+   "attempts": 1,
+   "target_turns": 8,
+   "explore_turns": 77,
+   "stop": "coverage_complete",
+   "goals": [
+    {
+     "level": 1,
+     "verdict": "passed"
+    },
+    {
+     "level": 1,
+     "verdict": "passed"
+    },
+    {
+     "level": 1,
+     "verdict": "passed"
+    },
+    {
+     "level": 2,
+     "verdict": "passed"
+    },
+    {
+     "level": 2,
+     "verdict": "passed"
+    },
+    {
+     "level": 3,
+     "verdict": "failed"
+    },
+    {
+     "level": 3,
+     "verdict": "failed"
+    }
+   ]
+  },
+  {
+   "scene": 6,
+   "attempts": 1,
+   "target_turns": 11,
+   "explore_turns": 75,
+   "stop": "coverage_complete",
+   "goals": [
+    {
+     "level": 1,
+     "verdict": "passed"
+    },
+    {
+     "level": 1,
+     "verdict": "passed"
+    },
+    {
+     "level": 1,
+     "verdict": "failed"
+    },
+    {
+     "level": 2,
+     "verdict": "passed"
+    },
+    {
+     "level": 2,
+     "verdict": "passed"
+    },
+    {
+     "level": 3,
+     "verdict": "failed"
+    },
+    {
+     "level": 3,
+     "verdict": "failed"
+    }
+   ]
+  },
+  {
+   "scene": 7,
+   "attempts": 1,
+   "target_turns": 14,
+   "explore_turns": 73,
+   "stop": "coverage_complete",
+   "goals": [
+    {
+     "level": 1,
+     "verdict": "passed"
+    },
+    {
+     "level": 1,
+     "verdict": "failed"
+    },
+    {
+     "level": 1,
+     "verdict": "passed"
+    },
+    {
+     "level": 2,
+     "verdict": "passed"
+    },
+    {
+     "level": 2,
+     "verdict": "failed"
+    },
+    {
+     "level": 3,
+     "verdict": "failed"
+    },
+    {
+     "level": 3,
+     "verdict": "failed"
+    }
+   ]
+  },
+  {
+   "scene": 8,
+   "attempts": 1,
+   "target_turns": 14,
+   "explore_turns": 71,
+   "stop": "coverage_complete",
+   "goals": [
+    {
+     "level": 1,
+     "verdict": "passed"
+    },
+    {
+     "level": 1,
+     "verdict": "uncertain"
+    },
+    {
+     "level": 1,
+     "verdict": "failed"
+    },
+    {
+     "level": 2,
+     "verdict": "passed"
+    },
+    {
+     "level": 2,
+     "verdict": "failed"
+    },
+    {
+     "level": 3,
+     "verdict": "failed"
+    }
+   ]
+  },
+  {
+   "scene": 9,
+   "attempts": 1,
+   "target_turns": 13,
+   "explore_turns": 72,
+   "stop": "coverage_complete",
+   "goals": [
+    {
+     "level": 1,
+     "verdict": "passed"
+    },
+    {
+     "level": 1,
+     "verdict": "passed"
+    },
+    {
+     "level": 1,
+     "verdict": "failed"
+    },
+    {
+     "level": 2,
+     "verdict": "failed"
+    },
+    {
+     "level": 2,
+     "verdict": "failed"
+    },
+    {
+     "level": 3,
+     "verdict": "failed"
+    },
+    {
+     "level": 3,
+     "verdict": "passed"
+    }
+   ]
+  }
+ ]
+}

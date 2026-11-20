@@ -1,0 +1,993 @@
+/* ProactiveVLA 项目主页样式
+   顺序：字体 → 设计令牌 → 基础 → 布局 → 组件。
+   配色跟随系统的浅色/深色设置（light-dark()），不提供手动切换。 */
+
+@layer reset, tokens, base, layout, components;
+
+@font-face {
+  font-family: "Archivo";
+  src: url("../fonts/archivo-latin-wght.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Source Serif 4";
+  src: url("../fonts/source-serif-4-latin-wght.woff2") format("woff2");
+  font-weight: 400 600;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Source Serif 4";
+  src: url("../fonts/source-serif-4-latin-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@layer reset {
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  body, h1, h2, h3, h4, p, figure, blockquote, dl, dd, ol, ul, pre { margin: 0; }
+  ul[role="list"], ol[role="list"] { padding: 0; list-style: none; }
+  img, svg, video { display: block; max-width: 100%; }
+  img, video { height: auto; }
+  input, button { font: inherit; color: inherit; }
+  /* hidden="until-found" 的面板要留在渲染树里，页内查找才能找到它 */
+  [hidden]:not([hidden="until-found"]) { display: none !important; }
+}
+
+@layer tokens {
+  :root {
+    color-scheme: light dark;
+
+    /* 底色与文字：冷灰白纸面；深色模式是单独选定的色阶，不是简单反相 */
+    --paper: light-dark(#f5f7f9, #121a23);
+    --sunk: light-dark(#e9eef2, #1a2430);
+    --plate: #ffffff;              /* 论文插图底板，两种模式都用白色 */
+    --ink: light-dark(#17222d, #e3eaf0);
+    --ink-2: light-dark(#4b5966, #a7b4c0);
+    --ink-3: light-dark(#5c6975, #8e9cab);
+    --rule: light-dark(#d3dbe3, #2b3744);
+    --rule-strong: light-dark(#aab5c0, #3a4857);
+
+    /* 蓝色 = ProactiveVLA / 探索 / 通过；红色只在与 Harness VLA 对比时出现 */
+    --accent: light-dark(#1b65a8, #4f97d4);
+    --accent-ink: light-dark(#1a5c99, #7db4e6);
+    --accent-wash: light-dark(#e3edf7, #1c2b3c);
+    --on-accent: light-dark(#ffffff, #0c1825);
+    --harness: light-dark(#c43d50, #e0707f);
+    --target: light-dark(#9aa6b2, #56636f);   /* 账本里“目标任务”轮次，旁边总有数字标注 */
+
+    /* 深色色块：首屏标题区和页脚共用同一套，让页面首尾呼应。
+       深色模式下色块比页面底色亮一档（不是反相），仍能看出是一块独立的颜色。 */
+    --slab: light-dark(#0b2033, #16293c);
+    --slab-ink: light-dark(#f3f8fc, #eaf2f8);
+    --slab-ink-2: light-dark(#b7c9d8, #b4c6d4);
+    --slab-ink-3: light-dark(#8ea6b9, #93a8b9);
+    --slab-line: rgb(255 255 255 / 0.16);     /* 色块上的分隔线，两种模式一致 */
+    /* 首屏渐变的两端：左上角一团冷光，底部压深，做出“舞台打光”的层次而不是一块死板的平色 */
+    --slab-glow: light-dark(#1b4c7d, #1d4569);
+    --slab-deep: light-dark(#07182a, #101d2b);
+
+    --font-sans: "Archivo", "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-serif: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+    --font-mono: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace;
+
+    --page: 73.75rem;
+    --measure: 66ch;
+    --gutter: clamp(1.25rem, 0.5rem + 3vw, 2.5rem);
+    --nav-h: 3.25rem;
+    --radius-s: 4px;
+    --radius-m: 8px;
+
+    accent-color: var(--accent);
+    scrollbar-color: var(--rule-strong) var(--paper);
+  }
+}
+
+@layer base {
+  html { scroll-padding-top: calc(var(--nav-h) + 1rem); }
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+  body {
+    min-height: 100vh;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    line-height: 1.6;
+    font-size-adjust: from-font;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-sans);
+    font-weight: 650;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  h2 { font-size: clamp(1.625rem, 1.15rem + 1.6vw, 2.375rem); }
+  h3 { font-size: 1.3125rem; line-height: 1.25; }
+  p, li, dd, figcaption, caption, blockquote { text-wrap: pretty; }
+  a { color: var(--accent-ink); text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 3px; }
+  [tabindex="-1"]:focus { outline: none; }
+  ::selection { background: var(--accent-wash); color: var(--ink); }
+  sup { font-size: 0.7em; line-height: 0; }
+  code, pre { font-family: var(--font-mono); font-size: 0.875em; }
+}
+
+@layer layout {
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+  }
+  .site-nav, .hero-inner, .section, .footer-inner {
+    width: min(100% - 2 * var(--gutter), var(--page));
+    margin-inline: auto;
+  }
+  .section { margin-block-start: clamp(4.5rem, 3rem + 5vw, 7.5rem); }
+  .section > * + * { margin-block-start: 1.25rem; }
+  .section > h2 + * { margin-block-start: 1rem; }
+  .section > h3 { margin-block-start: clamp(2.75rem, 2rem + 2vw, 3.75rem); }
+  .section > p { max-width: var(--measure); }
+  .lead { font-size: 1.1875rem; }
+  .source-note {
+    color: var(--ink-3);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+  }
+  .site-footer {
+    margin-block-start: clamp(4.5rem, 3rem + 5vw, 7rem);
+    padding-block: 2.25rem;
+    /* 底部微微亮起，和首屏顶部的冷光首尾呼应；文字在最上面，落在纯色区，对比度不变 */
+    background: linear-gradient(to bottom, var(--slab), color-mix(in oklab, var(--slab-glow) 58%, var(--slab-deep)));
+    background-color: var(--slab);
+    color: var(--slab-ink-3);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+  }
+}
+
+@layer components {
+  .visually-hidden {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+  .sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+  .skip-link {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 30;
+    padding: 0.5rem 0.875rem;
+    border-radius: var(--radius-s);
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    translate: 0 -200%;
+  }
+  .skip-link:focus { translate: none; }
+
+  /* 顶部导航：滚动时高亮当前区块（原生 scroll-target-group，JS 兜底加 .target-current）。
+     分组设在整个 nav 上，让指向 #top 的站名也参与：停在首屏时它是当前项，右侧链接都不高亮。 */
+  .site-nav {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    min-height: var(--nav-h);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    scroll-target-group: auto;
+  }
+  .brand {
+    flex: none;
+    color: var(--ink);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 1.25rem;
+    margin-inline-start: auto;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-links a {
+    display: block;
+    padding-block: 0.875rem 0.75rem;
+    border-bottom: 2px solid transparent;
+    color: var(--ink-2);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a:focus-visible { outline-offset: -2px; }
+  .nav-links a:is(:target-current, .target-current) {
+    border-bottom-color: var(--accent);
+    color: var(--ink);
+  }
+  @media (width < 48rem) {
+    .site-nav { gap: 1rem; }
+  }
+
+  /* 首屏：整幅深色色块，背景铺满十一条 40° 倾斜、横移的仿真视频带（纯装饰）。
+     文字压在左侧加深的渐变上，右侧透出更亮的画面——画面垫在字底下时，
+     就靠这层渐变把标题区压暗，保证对比度。 */
+  .hero {
+    position: relative;
+    overflow: hidden;                 /* 视频带比首屏大，靠这里裁掉，不产生横向滚动 */
+    min-height: 100svh;               /* 首屏至少占满一屏，下面的正文不会从折线处提前露头 */
+    padding-block: clamp(2.75rem, 1.25rem + 5.5vw, 4.25rem) clamp(3.5rem, 2.5rem + 4vw, 5.5rem);
+    background: linear-gradient(to bottom, var(--slab) 30%, var(--slab-deep));
+    background-color: var(--slab);   /* 写在简写之后，渐变不可用时仍有实色兜底 */
+    color: var(--slab-ink);
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+  }
+  .title { font-weight: 700; }
+  .title-name {
+    display: block;
+    font-size: clamp(2.5rem, 0.55rem + 9vw, 8.5rem);
+    line-height: 0.9;
+    letter-spacing: -0.035em;
+  }
+  .title-sub {
+    display: block;
+    max-width: 26ch;
+    margin-block-start: clamp(1rem, 0.75rem + 1vw, 1.75rem);
+    color: var(--slab-ink-2);
+    font-family: var(--font-serif);
+    font-size: clamp(1.375rem, 1rem + 1.7vw, 2.375rem);
+    font-weight: 400;
+    line-height: 1.22;
+    letter-spacing: -0.005em;
+  }
+  .hero-summary {
+    max-width: 56ch;
+    margin-block-start: 1.75rem;
+    color: var(--slab-ink-2);
+    font-size: 1.1875rem;
+  }
+  .byline { margin-block-start: 2rem; font-family: var(--font-sans); }
+  .authors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
+    font-size: 1.0625rem;
+    font-weight: 500;
+  }
+  .affiliations, .author-notes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1.25rem;
+    margin-block-start: 0.375rem;
+    color: var(--slab-ink-3);
+    font-size: 0.9375rem;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+    margin-block-start: 1.75rem;
+  }
+  .button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0.5rem 1.125rem 0.5rem 0.875rem;
+    border: 1px solid var(--ink);
+    border-radius: var(--radius-m);
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  a.button:hover { background: color-mix(in oklab, var(--ink) 84%, var(--paper)); }
+  .button.is-quiet { background: transparent; color: var(--ink); }
+  a.button.is-quiet:hover { background: var(--sunk); }
+  .button.is-unavailable {
+    border-style: dashed;
+    border-color: var(--rule-strong);
+    background: transparent;
+    color: var(--ink-3);
+    font-weight: 500;
+  }
+  /* 色块上的按钮：主按钮反过来用近白底 + 深色字，描边按钮用半透明白边 */
+  .hero .button {
+    border-color: var(--slab-ink);
+    background: var(--slab-ink);
+    color: var(--slab);
+  }
+  .hero a.button:hover { background: color-mix(in oklab, var(--slab-ink) 86%, var(--slab)); }
+  .hero .button.is-quiet {
+    border-color: color-mix(in oklab, var(--slab-ink) 42%, transparent);
+    background: transparent;
+    color: var(--slab-ink);
+  }
+  .hero a.button.is-quiet:hover { background: rgb(255 255 255 / 0.09); }
+  .hero .button.is-unavailable {
+    border-color: var(--slab-line);
+    background: transparent;
+    color: var(--slab-ink-3);
+  }
+  .hero :focus-visible { outline-color: var(--slab-ink); }
+  .icon {
+    flex: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* 首屏视频带：十一条 40° 倾斜的斜带铺满整个首屏，相邻两条反向横移，像一叠斜着摊开的胶片。
+     每排内容复制一份，在 25% 与 -25% 之间斜向横移，走的正好是一份复制件的长度；
+     两端始终留着半份余量，任何时刻都盖满画面。
+     动画默认暂停，由 main.js 在“允许自动播放 + 首屏可见”时打开；系统要求减少动效时始终静止。 */
+  .hero-wall {
+    --tile: clamp(6.5rem, 1.6rem + 5.4vw, 11.5rem);
+    --tile-gap: clamp(0.5rem, 0.4rem + 0.4vw, 0.75rem);
+    /* 排距按格子尺寸推导：cos40° ≈ 0.766，相邻两条斜带的垂直间距除以它，
+       斜带转过来之后的净间隙正好等于同一排里格子之间的间隙，整片铺满不露大缝 */
+    --pitch: calc((var(--tile) + var(--tile-gap)) * 1.3055);
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    /* 左缘淡出：标题区让位给纯色底，画面越往右越完整 */
+    -webkit-mask-image: linear-gradient(100deg, transparent 2%, rgb(0 0 0 / 0.45) 26%, #000 58%);
+    mask-image: linear-gradient(100deg, transparent 2%, rgb(0 0 0 / 0.45) 26%, #000 58%);
+  }
+  /* 压暗层：左边最重（保证文字对比度），右缘留亮；再叠冷光、斜向掠光和底部沉降。
+     它是独立的兄弟节点，不受视频带左缘遮罩的影响 */
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      radial-gradient(52rem 26rem at 12% -6%, color-mix(in oklab, var(--slab-glow) 60%, transparent), transparent 70%),
+      linear-gradient(-10deg, transparent 36%, rgb(255 255 255 / 0.05) 50%, transparent 64%),
+      linear-gradient(to bottom, transparent 62%, rgb(7 18 30 / 0.5)),
+      linear-gradient(96deg, rgb(7 18 30 / 0.86), rgb(7 18 30 / 0.8) 42%, rgb(7 18 30 / 0.5) 62%, rgb(7 18 30 / 0.18) 84%, rgb(7 18 30 / 0.08));
+  }
+  /* 每一排都绕自己的中心逆时针转 40°，从左上贯到右下；--k 决定它在中线上下第几排 */
+  .wall-row {
+    position: absolute;
+    left: 50%;
+    top: calc(50% + var(--k, 0) * var(--pitch));
+    translate: -50% -50%;
+    rotate: -40deg;
+    display: flex;
+    width: max-content;
+    animation: wall-slide var(--speed, 96s) linear infinite alternate;
+    animation-play-state: paused;
+  }
+  .hero-wall[data-running="true"] .wall-row { animation-play-state: running; }
+  .wall-row[data-dir="fwd"] { --speed: 96s; }
+  .wall-row[data-dir="rev"] { --speed: 124s; animation-direction: reverse; }
+  @keyframes wall-slide {
+    /* 只在中间位置左右各走半份复制件：整排两端始终留着余量，任何时刻都盖满画面，
+       不会扫到排头露出空隙。用 alternate 到端点后原地折返，没有跳帧 */
+    from { transform: translateX(25%); }
+    to { transform: translateX(-25%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wall-row { animation: none; }
+  }
+  /* 窄屏上首屏短、斜弦短，最外侧四条斜带用不上：不显示，省下两百来个格子的内存 */
+  @media (width < 48rem) {
+    .wall-row:nth-child(-n + 2),
+    .wall-row:nth-child(n + 10) { display: none; }
+  }
+  .wall-clip {
+    flex: none;
+    width: var(--tile);
+    height: var(--tile);
+    margin-inline-end: var(--tile-gap);   /* 间距算进格子宽度，复制件才对得齐 */
+    border-radius: var(--radius-s);
+    background: var(--slab);
+    object-fit: cover;
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.07);
+  }
+
+  /* 正文各节：标题上方一道 40° 的短斜线（和首屏视频带同一个角度），长页面靠它形成节奏 */
+  .section > h2::before {
+    content: "";
+    display: block;
+    width: 3px;
+    height: clamp(1.5rem, 1.25rem + 0.6vw, 1.875rem);
+    margin-block-end: 0.75rem;
+    border-radius: 2px;
+    background: linear-gradient(to top, var(--accent), color-mix(in oklab, var(--accent) 25%, transparent));
+    rotate: 40deg;                    /* 竖直短线顺时针转 40°，右端朝上，和视频带同向 */
+    transform-origin: 50% 100%;
+  }
+  /* 整幅色带：背景铺满视口，内容宽度与其它节完全对齐（左右内边距把内容居中） */
+  .section.band {
+    width: 100%;
+    margin-inline: 0;
+    padding-block: clamp(2.75rem, 2rem + 3vw, 4.25rem);
+    padding-inline: max(var(--gutter), calc((100% - var(--page)) / 2));
+    /* 很轻的纵向渐变 + 40° 细斜纹，色带不是一块死板的平色；两端的对比度都比原来的平色更好或持平 */
+    background:
+      repeating-linear-gradient(-40deg, transparent 0 26px, color-mix(in oklab, var(--accent) 6%, transparent) 26px 27px),
+      linear-gradient(180deg, var(--accent-wash), color-mix(in oklab, var(--accent-wash) 58%, var(--paper)));
+    background-color: var(--accent-wash);
+  }
+  /* 摘要按“论文原话”处理：左侧引线 + 略大的字号，和指令对比的引文是同一套语言 */
+  .prose-body {
+    max-width: 64ch;
+    padding-inline-start: clamp(1rem, 0.5rem + 1.5vw, 1.75rem);
+    border-inline-start: 3px solid var(--accent);
+  }
+  .prose-body > p {
+    font-size: clamp(1.1875rem, 1.1rem + 0.4vw, 1.375rem);
+    line-height: 1.55;
+  }
+  .prose-body > p + p { margin-block-start: 0.9em; }
+
+  /* 探索账本：左边是视频，右边是 10 个场景（单选组），每行一条轮次条 + 目标评定标记 */
+  .ledger {
+    display: grid;
+    grid-template-columns: minmax(15rem, 24rem) minmax(0, 1fr);
+    gap: 2rem clamp(2rem, 4vw, 3.5rem);
+    align-items: start;
+    margin-block-start: 2rem;
+  }
+  .ledger-player {
+    position: sticky;
+    top: calc(var(--nav-h) + 1.25rem);
+    font-family: var(--font-sans);
+  }
+  .ledger-player video {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: var(--radius-m);
+    background: var(--sunk);
+  }
+  .ledger-caption {
+    margin-block-start: 0.75rem;
+    color: var(--ink-2);
+    font-size: 0.9375rem;
+    line-height: 1.45;
+  }
+  .ledger-caption strong { color: var(--ink); font-weight: 600; }
+  .speed {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem;
+    margin-block-start: 0.875rem;
+  }
+  .speed-label { margin-inline-end: 0.375rem; color: var(--ink-3); font-size: 0.875rem; }
+  .speed label {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-width: 2.75rem;
+    min-height: 2rem;
+    padding-inline: 0.5rem;
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius-s);
+    font-size: 0.875rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    cursor: pointer;
+  }
+  .speed input {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    border-radius: inherit;
+    appearance: none;
+    cursor: pointer;
+  }
+  .speed label:has(:checked) { border-color: var(--ink); background: var(--ink); color: var(--paper); }
+  .speed input:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 2px; }
+
+  .ledger-list { min-width: 0; font-family: var(--font-sans); }
+  .ledger-head, .ledger-row {
+    display: grid;
+    grid-template-columns: 1.25rem minmax(9.5rem, 1.15fr) minmax(7.5rem, 1fr) repeat(3, 3.75rem);
+    column-gap: 0.875rem;
+    align-items: center;
+  }
+  .ledger-head {
+    padding: 0 0.75rem 0.625rem;
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink-2);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .ledger-head > :first-child { grid-column: 2; }
+  .ledger-rows { margin-block-start: 0.375rem; }
+  .ledger-row {
+    padding: 0.625rem 0.75rem;
+    border-radius: var(--radius-m);
+    cursor: pointer;
+  }
+  .ledger-row + .ledger-row { margin-block-start: 2px; }
+  .ledger-row:hover { background: color-mix(in oklab, var(--accent-wash) 55%, transparent); }
+  .ledger-row:has(:checked) {
+    background-color: var(--accent-wash);
+    /* 选中的场景铺一层 40° 细斜纹，和首屏视频带、色带同一个角度 */
+    background-image: repeating-linear-gradient(-40deg, transparent 0 6px, color-mix(in oklab, var(--accent) 6%, transparent) 6px 7px);
+  }
+  .ledger-row:has(:focus-visible) { outline: 2px solid var(--accent-ink); outline-offset: 0; }
+  .ledger-row input { width: 1.125rem; height: 1.125rem; margin: 0; }
+  .ledger-row input:focus-visible { outline: none; }   /* 焦点框画在整行上 */
+  .ledger-scene { display: grid; gap: 0.125rem; }
+  .ledger-name { font-weight: 600; }
+  .ledger-row:has(:checked) .ledger-name { color: var(--accent-ink); }
+  .ledger-task { color: var(--ink-3); font-size: 0.875rem; line-height: 1.35; }
+  .ledger-turns { display: grid; gap: 0.375rem; }
+  .turns-text { color: var(--ink-2); font-size: 0.8125rem; font-variant-numeric: tabular-nums; }
+  /* 轮次条：所有场景同一比例尺（--max），两段之间留 2px 纸面间隙，数据端 4px 圆角 */
+  .bar { display: flex; gap: 2px; height: 8px; }
+  .seg { flex: none; height: 100%; }
+  .seg-target { width: calc((100% - 2px) * var(--a) / var(--max)); background: var(--target); }
+  .seg-explore {
+    width: calc((100% - 2px) * var(--b) / var(--max));
+    border-radius: 0 4px 4px 0;
+    background: var(--accent);
+  }
+  .ledger-goals { display: contents; }
+  .goals { display: flex; align-items: center; gap: 3px; }
+  .g { flex: none; width: 18px; height: 18px; }
+  .goals-none { color: var(--ink-3); font-size: 0.8125rem; line-height: 18px; }
+  .lvl { display: none; }
+
+  .ledger-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    margin-block-start: 1rem;
+    padding-inline: 0.75rem;
+    color: var(--ink-2);
+    font-size: 0.8125rem;
+  }
+  .ledger-legend li { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .swatch { width: 1.5rem; height: 8px; }
+  .swatch-target { background: var(--target); }
+  .swatch-explore { border-radius: 0 4px 4px 0; background: var(--accent); }
+  .ledger-legend .legend-levels { display: none; }
+  .ledger-total { max-width: var(--measure); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      /* 页面里唯一的非交互动效：轮次条随滚动进入视口时从左向右展开 */
+      .ledger-row .bar {
+        transform-origin: left center;
+        animation: bar-grow linear both;
+        animation-timeline: view();
+        animation-range: entry 10% entry 90%;
+      }
+    }
+  }
+  @keyframes bar-grow { from { transform: scaleX(0); } }
+
+  @media (width < 64rem) {
+    .ledger { grid-template-columns: minmax(0, 1fr); }
+    /* 窄屏：播放器吸顶，选场景时视频始终可见 */
+    .ledger-player {
+      top: var(--nav-h);
+      z-index: 5;
+      display: grid;
+      grid-template-columns: minmax(7.5rem, 13rem) minmax(0, 1fr);
+      gap: 0 1rem;
+      align-items: start;
+      margin-inline: calc(-1 * var(--gutter));
+      padding: 0.75rem var(--gutter);
+      border-bottom: 1px solid var(--rule);
+      background: var(--paper);
+    }
+    .ledger-player video { grid-row: span 2; }
+    .ledger-caption { margin-block-start: 0; }
+  }
+  @media (width < 40rem) {
+    .ledger-head { display: none; }
+    .ledger-row {
+      grid-template-columns: 1.25rem minmax(0, 1fr);
+      grid-template-areas: "radio scene" ". turns" ". goals";
+      row-gap: 0.5rem;
+    }
+    .ledger-row input { grid-area: radio; align-self: start; margin-block-start: 0.125rem; }
+    .ledger-scene { grid-area: scene; }
+    .ledger-turns { grid-area: turns; }
+    .ledger-goals { grid-area: goals; display: flex; flex-wrap: wrap; gap: 0.375rem 1rem; }
+    .lvl { display: inline; margin-inline-end: 0.125rem; color: var(--ink-3); font-size: 0.75rem; font-weight: 600; }
+    .ledger-legend .legend-levels { display: inline-flex; }
+    /* 手机上吸顶播放器压到约 150px 高，给场景列表留出空间：视频列收窄，“Speed”字样只留给读屏 */
+    .ledger-player { grid-template-columns: 9rem minmax(0, 1fr); }
+    .ledger-caption { font-size: 0.8125rem; line-height: 1.4; }
+    .speed-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  }
+  /* 论文插图：白底板；图注放在底板外，深色模式下仍可读 */
+  .figure { margin-block-start: 1.75rem; }
+  .plate {
+    padding: clamp(0.75rem, 0.4rem + 1.5vw, 1.5rem);
+    border-radius: var(--radius-m);
+    background: var(--plate);
+  }
+  .plate img { width: 100%; margin-inline: auto; }
+  a.zoomable { display: block; cursor: zoom-in; }
+  .figure > figcaption {
+    max-width: 76ch;
+    margin-block-start: 0.875rem;
+    color: var(--ink-2);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+  .fig-label, .table-label { color: var(--ink); font-weight: 600; }
+  .figure-pair {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: 1rem;
+  }
+
+  /* 方法四步，字母与图 1 的面板一一对应，色块取自图中面板底色 */
+  .stages { display: grid; gap: 2.25rem; max-width: 52rem; margin-block-start: 2.5rem; }
+  .stage { position: relative; padding-inline-start: 3.25rem; }
+  .stage > * + * { margin-block-start: 0.75rem; }
+  .stage-key {
+    position: absolute;
+    top: -0.3rem;
+    left: 0;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--radius-s);
+    background: var(--tint);
+    color: #17222d;
+    font-size: 1.0625rem;
+    font-weight: 700;
+  }
+  .levels { display: grid; gap: 0.875rem; margin-block-start: 1rem; }
+  .levels > div { padding-inline-start: 1rem; border-inline-start: 2px solid var(--rule-strong); }
+  .levels dt { font-family: var(--font-sans); font-size: 1rem; font-weight: 600; }
+  .levels dd { color: var(--ink-2); font-style: italic; }
+  .pipeline {
+    display: grid;
+    gap: 0.375rem;
+    padding-inline-start: 1.5rem;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+  }
+  .pipeline li { padding-inline-start: 0.25rem; }
+  .pipeline li::marker { color: var(--ink-3); font-variant-numeric: tabular-nums; }
+
+  /* 表格：外层可横向滚动（键盘可聚焦），横向滚动时首列固定；三线表风格沿用论文 */
+  /* position: relative 让表内绝对定位的读屏文字以容器为包含块，否则横向滚动裁不住它们，整页会被撑宽 */
+  .table-wrap { position: relative; margin-block-start: 1.25rem; overflow-x: auto; overscroll-behavior-x: contain; }
+  .data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    line-height: 1.35;
+    font-variant-numeric: tabular-nums;
+  }
+  .data-table caption {
+    padding-block-end: 0.75rem;
+    color: var(--ink-2);
+    font-size: 0.9375rem;
+    text-align: left;
+    caption-side: top;
+  }
+  .data-table th, .data-table td {
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--rule);
+    text-align: right;
+    white-space: nowrap;
+  }
+  .data-table thead th {
+    border-bottom-color: var(--ink-3);
+    color: var(--ink-2);
+    font-weight: 600;
+    vertical-align: bottom;
+  }
+  .data-table thead tr:first-child > th { border-top: 2px solid var(--ink); }
+  .data-table thead th[scope="colgroup"] { border-bottom-color: var(--rule); text-align: center; }
+  .data-table thead th.is-wrapping { min-width: 8.5rem; white-space: normal; }
+  .data-table :is(th[scope="row"], .col-first) {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    border-right: 1px solid var(--rule);
+    background: var(--paper);
+    font-weight: 500;
+    text-align: left;
+  }
+  .data-table tbody:not(:last-of-type) tr:last-child > * { border-bottom-color: var(--ink-3); }
+  .data-table > :last-child tr:last-child > * { border-bottom: 2px solid var(--ink); }
+  /* 汇总行只加粗行首；数字保持常规字重，否则 <strong> 标出的最高值就看不出来 */
+  .data-table tfoot :is(th, td) { border-top: 1px solid var(--ink-3); }
+  .data-table tfoot th { font-weight: 600; }
+  .data-table td strong { font-weight: 700; }
+  .data-table tr.is-ours > :is(th, td) {
+    background-color: var(--accent-wash);
+    background-image: repeating-linear-gradient(-40deg, transparent 0 6px, color-mix(in oklab, var(--accent) 7%, transparent) 6px 7px);
+  }
+  .data-table tr.is-ours > th { font-weight: 700; }
+  .data-table col.is-ours {
+    background-color: var(--accent-wash);
+    background-image: repeating-linear-gradient(-40deg, transparent 0 6px, color-mix(in oklab, var(--accent) 7%, transparent) 6px 7px);
+  }
+  .data-table .is-text { text-align: left; }
+  .data-table.has-long-rows th[scope="row"] { min-width: 15rem; white-space: normal; }
+  .row-id { display: block; color: var(--ink-3); font-size: 0.8125rem; font-weight: 400; }
+  .data-table.is-compact { width: auto; }
+  .data-table.is-compact th[scope="row"] { min-width: 13rem; white-space: normal; }
+  @media (width < 40rem) {
+    /* 只有三列的小表在手机上让表头换行，免得 ProactiveVLA 一列要横向滚动才看得到 */
+    .data-table.is-compact th { white-space: normal; }
+    .data-table.is-compact th[scope="row"] { min-width: 0; }
+  }
+  .table-note {
+    max-width: 76ch;
+    color: var(--ink-3);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+  .table-wrap + .table-note { margin-block-start: 0.75rem; }
+
+  details.more, details.table-view { font-family: var(--font-sans); }
+  details.more > summary, details.table-view > summary {
+    width: fit-content;
+    min-height: 2.75rem;
+    padding-block: 0.625rem;
+    color: var(--accent-ink);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  details.more > summary:hover, details.table-view > summary:hover { text-decoration: underline; }
+
+  /* 指令对比：引号由 CSS 生成；左侧色条只标身份，文字仍用墨色 */
+  .quote-pair {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: 1.25rem 2rem;
+    max-width: 60rem;
+    margin-block-start: 1.5rem;
+  }
+  .quote { padding-inline-start: 1rem; border-inline-start: 3px solid var(--rule-strong); }
+  .quote.is-harness { border-inline-start-color: var(--harness); }
+  .quote.is-ours { border-inline-start-color: var(--accent); }
+  .quote blockquote { font-size: 1.1875rem; font-style: italic; line-height: 1.45; }
+  .quote blockquote p::before { content: "“"; }
+  .quote blockquote p::after { content: "”"; }
+  .quote figcaption {
+    margin-block-start: 0.5rem;
+    color: var(--ink-3);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+  }
+  /* 遮挡案例：两行各 7 帧，窄屏横向滚动；帧本身已带步骤编号 */
+  .occ-scroll { position: relative; overflow-x: auto; padding-block-end: 0.5rem; }
+  .occ-row + .occ-row { margin-block-start: 1.5rem; }
+  .occ-agent, .verdict {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-sans);
+    font-weight: 600;
+  }
+  .occ-agent { font-size: 1rem; }
+  .status { flex: none; width: 1.125rem; height: 1.125rem; }
+  .occ-steps {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(6.5rem, 1fr));
+    gap: 0.5rem;
+    min-width: 47rem;
+    margin-block-start: 0.625rem;
+  }
+  .occ-steps { counter-reset: step; }
+  .occ-steps li { position: relative; display: grid; align-content: start; gap: 0.375rem; counter-increment: step; }
+  .occ-steps img { width: 100%; aspect-ratio: 1; border-radius: var(--radius-s); object-fit: cover; }
+  /* 帧序号沿用论文图里的白底蓝框编号；有序列表本身已表达顺序，生成内容的替代文本留空，读屏不重复念 */
+  .occ-steps li::before {
+    content: counter(step) / "";
+    position: absolute;
+    top: 0.375rem;
+    left: 0.375rem;
+    display: grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1.5px solid #4f91c7;
+    border-radius: var(--radius-s);
+    background: #fff;
+    color: #17222d;
+    font: 600 0.8125rem/1 var(--font-sans);
+  }
+  .occ-steps span { color: var(--ink-2); font-family: var(--font-sans); font-size: 0.8125rem; line-height: 1.3; }
+  .occ-steps .is-key span { color: var(--ink); font-weight: 600; }
+
+  /* 视频标签页：手动激活；未选中的面板用 hidden="until-found"，所以面板本身不加内边距和边框 */
+  .tabs { margin-block-start: 1.75rem; }
+  .tablist {
+    display: flex;
+    gap: 0.25rem;
+    overflow-x: auto;
+    border-bottom: 1px solid var(--rule);
+    scrollbar-width: thin;
+  }
+  .tablist [role="tab"] {
+    position: relative;
+    flex: none;
+    min-height: 2.75rem;
+    padding: 0.625rem 0.875rem;
+    border: 0;
+    background: none;
+    color: var(--ink-2);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .tablist [role="tab"]::after {
+    content: "";
+    position: absolute;
+    inset: auto 0.5rem 0;
+    border-bottom: 3px solid transparent;
+  }
+  .tablist [role="tab"]:hover { color: var(--ink); }
+  .tablist [role="tab"]:focus-visible { outline-offset: -3px; }
+  .tablist [aria-selected="true"] { color: var(--ink); }
+  .tablist [aria-selected="true"]::after { border-bottom-color: var(--accent); }
+  .panel-lead { max-width: var(--measure); padding-block-start: 1.5rem; }
+  .disclosure {
+    max-width: var(--measure);
+    margin-block-start: 1rem;
+    padding: 0.875rem 1rem;
+    border-inline-start: 3px solid var(--rule-strong);
+    background: var(--sunk);
+    color: var(--ink-2);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+  .band .disclosure { background: var(--paper); }
+  .clip-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 12rem), 1fr));
+    gap: 1.75rem 1.25rem;
+    margin-block-start: 1.5rem;
+  }
+  /* 手机上两列，与“Head-to-head”里成对的两段视频同宽；一列时十段视频要滑很久 */
+  @media (width < 40rem) {
+    .clip-grid { grid-template-columns: 1fr 1fr; gap: 1.25rem 0.75rem; }
+  }
+  .clip video {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: var(--radius-m);
+    background: var(--rule);          /* 海报出来前的占位，纸面和色带上都看得见 */
+  }
+  .clip figcaption {
+    display: grid;
+    gap: 0.125rem;
+    margin-block-start: 0.5rem;
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    line-height: 1.35;
+  }
+  .clip-meta { color: var(--ink-3); font-size: 0.8125rem; font-weight: 400; }
+  .pair-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 25rem), 1fr));
+    gap: 2.25rem 2.5rem;
+    margin-block-start: 1.75rem;
+  }
+  .pair h3 { display: grid; gap: 0.125rem; font-size: 1rem; font-weight: 600; line-height: 1.35; }
+  .pair-clips { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-block-start: 0.625rem; }
+  .pair-clips figcaption { font-size: 0.875rem; }
+  .clip .verdict { display: flex; }
+  .verdict .status { width: 1rem; height: 1rem; }
+
+  /* BibTeX 用深色块收尾，和首屏、页脚呼应；提示气泡同时是 live region，只用 opacity 显隐 */
+  .code-block {
+    position: relative;
+    max-width: 60rem;
+    border-radius: var(--radius-m);
+    /* 右上角一点冷光，和首屏同一套打光方式 */
+    background-color: var(--slab);
+    background:
+      radial-gradient(24rem 12rem at 100% 0%, color-mix(in oklab, var(--accent) 22%, var(--slab)), transparent 72%),
+      var(--slab);
+  }
+  .code-block pre {
+    padding: 1.25rem 4rem 1.25rem 1.25rem;
+    color: var(--slab-ink);
+    line-height: 1.6;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .copy { position: absolute; top: 0.625rem; right: 0.625rem; }
+  .copy-button {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid var(--slab-line);
+    border-radius: var(--radius-s);
+    background: rgb(255 255 255 / 0.06);
+    color: var(--slab-ink-2);
+    cursor: pointer;
+  }
+  .copy-button:hover { border-color: var(--slab-ink-2); color: var(--slab-ink); }
+  .code-block :focus-visible { outline-color: var(--slab-ink); }
+  .copy-button .icon-check { display: none; }
+  .copy-button[data-copied] .icon-copy { display: none; }
+  .copy-button[data-copied] .icon-check { display: block; color: var(--slab-ink); }
+  .tip {
+    position: absolute;
+    top: 50%;
+    right: calc(100% + 0.5rem);
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-s);
+    background: var(--slab-ink);
+    color: var(--slab);
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    translate: 0 -50%;
+  }
+  .copy-button:is([data-copied], [data-failed]) + .tip { opacity: 1; }
+  @media (prefers-reduced-motion: no-preference) {
+    .tip { transition: opacity 0.15s ease-out; }
+  }
+
+  /* 强制配色模式（Windows 高对比度）下背景色会被系统覆盖，账本色条改用系统色 */
+  @media (forced-colors: active) {
+    .seg, .swatch { forced-color-adjust: none; }
+    .seg-target, .swatch-target { background: GrayText; }
+    .seg-explore, .swatch-explore { background: Highlight; }
+    .ledger-row:has(:checked) { outline: 2px solid Highlight; }
+  }
+
+  /* 页脚和首屏同一个色块，链接改用近白色，深蓝在深色块上不够亮 */
+  .site-footer a {
+    color: var(--slab-ink);
+    text-decoration-color: color-mix(in oklab, var(--slab-ink) 50%, transparent);
+  }
+  .footer-inner p { max-width: 52ch; }
+}

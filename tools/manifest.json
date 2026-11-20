@@ -1,0 +1,540 @@
+{
+ "videos": {
+  "explore": [
+   {
+    "name": "scene-00",
+    "task": 0,
+    "seed": 0,
+    "duration": 113.5,
+    "bytes": 1193450
+   },
+   {
+    "name": "scene-01",
+    "task": 1,
+    "seed": 0,
+    "duration": 41.9,
+    "bytes": 366729
+   },
+   {
+    "name": "scene-02",
+    "task": 2,
+    "seed": 0,
+    "duration": 130.1,
+    "bytes": 1258154
+   },
+   {
+    "name": "scene-03",
+    "task": 3,
+    "seed": 0,
+    "duration": 115.5,
+    "bytes": 1229312
+   },
+   {
+    "name": "scene-04",
+    "task": 4,
+    "seed": 0,
+    "duration": 77.0,
+    "bytes": 795114
+   },
+   {
+    "name": "scene-05",
+    "task": 5,
+    "seed": 0,
+    "duration": 126.0,
+    "bytes": 1302588
+   },
+   {
+    "name": "scene-06",
+    "task": 6,
+    "seed": 0,
+    "duration": 113.8,
+    "bytes": 1252147
+   },
+   {
+    "name": "scene-07",
+    "task": 7,
+    "seed": 0,
+    "duration": 102.3,
+    "bytes": 1038597
+   },
+   {
+    "name": "scene-08",
+    "task": 8,
+    "seed": 0,
+    "duration": 146.4,
+    "bytes": 1644933
+   },
+   {
+    "name": "scene-09",
+    "task": 9,
+    "seed": 0,
+    "duration": 184.8,
+    "bytes": 2010814
+   }
+  ],
+  "goal-t": [
+   {
+    "name": "task-00-seed-09",
+    "task": 0,
+    "seed": 9,
+    "duration": 10.5,
+    "bytes": 112340
+   },
+   {
+    "name": "task-01-seed-01",
+    "task": 1,
+    "seed": 1,
+    "duration": 9.2,
+    "bytes": 95210
+   },
+   {
+    "name": "task-02-seed-09",
+    "task": 2,
+    "seed": 9,
+    "duration": 6.8,
+    "bytes": 58606
+   },
+   {
+    "name": "task-03-seed-03",
+    "task": 3,
+    "seed": 3,
+    "duration": 11.1,
+    "bytes": 110415
+   },
+   {
+    "name": "task-04-seed-06",
+    "task": 4,
+    "seed": 6,
+    "duration": 10.0,
+    "bytes": 105626
+   },
+   {
+    "name": "task-05-seed-06",
+    "task": 5,
+    "seed": 6,
+    "duration": 9.3,
+    "bytes": 96138
+   },
+   {
+    "name": "task-06-seed-06",
+    "task": 6,
+    "seed": 6,
+    "duration": 7.8,
+    "bytes": 62033
+   },
+   {
+    "name": "task-07-seed-01",
+    "task": 7,
+    "seed": 1,
+    "duration": 2.8,
+    "bytes": 27115
+   },
+   {
+    "name": "task-08-seed-02",
+    "task": 8,
+    "seed": 2,
+    "duration": 7.9,
+    "bytes": 66212
+   },
+   {
+    "name": "task-09-seed-06",
+    "task": 9,
+    "seed": 6,
+    "duration": 8.9,
+    "bytes": 69727
+   }
+  ],
+  "h2h": [
+   {
+    "name": "task-00-seed-02-harness",
+    "task": 0,
+    "seed": 2,
+    "duration": 177.2,
+    "bytes": 1782667
+   },
+   {
+    "name": "task-00-seed-05-harness",
+    "task": 0,
+    "seed": 5,
+    "duration": 175.1,
+    "bytes": 1536652
+   },
+   {
+    "name": "task-00-seed-07-harness",
+    "task": 0,
+    "seed": 7,
+    "duration": 169.5,
+    "bytes": 1252372
+   },
+   {
+    "name": "task-00-seed-09-harness",
+    "task": 0,
+    "seed": 9,
+    "duration": 212.8,
+    "bytes": 2023878
+   },
+   {
+    "name": "task-02-seed-06-harness",
+    "task": 2,
+    "seed": 6,
+    "duration": 146.0,
+    "bytes": 1424649
+   },
+   {
+    "name": "task-03-seed-07-harness",
+    "task": 3,
+    "seed": 7,
+    "duration": 139.2,
+    "bytes": 1183742
+   },
+   {
+    "name": "task-05-seed-01-harness",
+    "task": 5,
+    "seed": 1,
+    "duration": 132.7,
+    "bytes": 1065036
+   },
+   {
+    "name": "task-06-seed-06-harness",
+    "task": 6,
+    "seed": 6,
+    "duration": 143.0,
+    "bytes": 1080422
+   },
+   {
+    "name": "task-06-seed-07-harness",
+    "task": 6,
+    "seed": 7,
+    "duration": 104.8,
+    "bytes": 805745
+   },
+   {
+    "name": "task-06-seed-09-harness",
+    "task": 6,
+    "seed": 9,
+    "duration": 95.6,
+    "bytes": 755948
+   },
+   {
+    "name": "task-08-seed-09-harness",
+    "task": 8,
+    "seed": 9,
+    "duration": 145.2,
+    "bytes": 1049039
+   },
+   {
+    "name": "task-00-seed-02-proactive",
+    "task": 0,
+    "seed": 2,
+    "duration": 59.3,
+    "bytes": 691428
+   },
+   {
+    "name": "task-00-seed-05-proactive",
+    "task": 0,
+    "seed": 5,
+    "duration": 105.8,
+    "bytes": 1075188
+   },
+   {
+    "name": "task-00-seed-07-proactive",
+    "task": 0,
+    "seed": 7,
+    "duration": 319.0,
+    "bytes": 3065739
+   },
+   {
+    "name": "task-00-seed-09-proactive",
+    "task": 0,
+    "seed": 9,
+    "duration": 10.5,
+    "bytes": 112340
+   },
+   {
+    "name": "task-02-seed-06-proactive",
+    "task": 2,
+    "seed": 6,
+    "duration": 25.5,
+    "bytes": 203255
+   },
+   {
+    "name": "task-03-seed-07-proactive",
+    "task": 3,
+    "seed": 7,
+    "duration": 73.0,
+    "bytes": 498795
+   },
+   {
+    "name": "task-05-seed-01-proactive",
+    "task": 5,
+    "seed": 1,
+    "duration": 44.0,
+    "bytes": 383388
+   },
+   {
+    "name": "task-06-seed-06-proactive",
+    "task": 6,
+    "seed": 6,
+    "duration": 7.8,
+    "bytes": 62033
+   },
+   {
+    "name": "task-06-seed-07-proactive",
+    "task": 6,
+    "seed": 7,
+    "duration": 17.9,
+    "bytes": 120341
+   },
+   {
+    "name": "task-06-seed-09-proactive",
+    "task": 6,
+    "seed": 9,
+    "duration": 32.4,
+    "bytes": 290270
+   },
+   {
+    "name": "task-08-seed-09-proactive",
+    "task": 8,
+    "seed": 9,
+    "duration": 21.8,
+    "bytes": 201442
+   }
+  ],
+  "object-t": [
+   {
+    "name": "task-00-seed-09",
+    "task": 0,
+    "seed": 9,
+    "duration": 10.3,
+    "bytes": 88413
+   },
+   {
+    "name": "task-01-seed-04",
+    "task": 1,
+    "seed": 4,
+    "duration": 22.2,
+    "bytes": 167874
+   },
+   {
+    "name": "task-03-seed-06",
+    "task": 3,
+    "seed": 6,
+    "duration": 10.8,
+    "bytes": 85391
+   },
+   {
+    "name": "task-06-seed-06",
+    "task": 6,
+    "seed": 6,
+    "duration": 11.3,
+    "bytes": 88522
+   },
+   {
+    "name": "task-08-seed-07",
+    "task": 8,
+    "seed": 7,
+    "duration": 13.9,
+    "bytes": 133893
+   },
+   {
+    "name": "task-09-seed-05",
+    "task": 9,
+    "seed": 5,
+    "duration": 15.2,
+    "bytes": 129016
+   }
+  ],
+  "spatial-t": [
+   {
+    "name": "task-01-seed-08",
+    "task": 1,
+    "seed": 8,
+    "duration": 28.0,
+    "bytes": 243271
+   },
+   {
+    "name": "task-02-seed-10",
+    "task": 2,
+    "seed": 10,
+    "duration": 11.2,
+    "bytes": 105923
+   },
+   {
+    "name": "task-05-seed-05",
+    "task": 5,
+    "seed": 5,
+    "duration": 10.3,
+    "bytes": 109425
+   },
+   {
+    "name": "task-09-seed-04",
+    "task": 9,
+    "seed": 4,
+    "duration": 8.8,
+    "bytes": 85723
+   }
+  ],
+  "l10-s": [
+   {
+    "name": "task-02-seed-02",
+    "task": 2,
+    "seed": 2,
+    "duration": 43.0,
+    "bytes": 393691
+   },
+   {
+    "name": "task-05-seed-01",
+    "task": 5,
+    "seed": 1,
+    "duration": 27.8,
+    "bytes": 193339
+   }
+  ],
+  "object-s": [
+   {
+    "name": "task-00-seed-01",
+    "task": 0,
+    "seed": 1,
+    "duration": 5.2,
+    "bytes": 53591
+   },
+   {
+    "name": "task-01-seed-09",
+    "task": 1,
+    "seed": 9,
+    "duration": 10.7,
+    "bytes": 83899
+   },
+   {
+    "name": "task-02-seed-01",
+    "task": 2,
+    "seed": 1,
+    "duration": 9.6,
+    "bytes": 69867
+   },
+   {
+    "name": "task-03-seed-10",
+    "task": 3,
+    "seed": 10,
+    "duration": 11.8,
+    "bytes": 83511
+   },
+   {
+    "name": "task-04-seed-01",
+    "task": 4,
+    "seed": 1,
+    "duration": 10.8,
+    "bytes": 109311
+   },
+   {
+    "name": "task-05-seed-08",
+    "task": 5,
+    "seed": 8,
+    "duration": 11.8,
+    "bytes": 87705
+   },
+   {
+    "name": "task-06-seed-10",
+    "task": 6,
+    "seed": 10,
+    "duration": 10.2,
+    "bytes": 89286
+   },
+   {
+    "name": "task-07-seed-05",
+    "task": 7,
+    "seed": 5,
+    "duration": 9.9,
+    "bytes": 86774
+   },
+   {
+    "name": "task-08-seed-07",
+    "task": 8,
+    "seed": 7,
+    "duration": 10.9,
+    "bytes": 101437
+   },
+   {
+    "name": "task-09-seed-03",
+    "task": 9,
+    "seed": 3,
+    "duration": 8.2,
+    "bytes": 59484
+   }
+  ]
+ },
+ "figures": {
+  "architecture-1200": [
+   1200,
+   673
+  ],
+  "architecture-2000": [
+   2000,
+   1122
+  ],
+  "occ-proactive-1": [
+   256,
+   256
+  ],
+  "occ-proactive-2": [
+   256,
+   256
+  ],
+  "occ-proactive-3": [
+   256,
+   256
+  ],
+  "occ-proactive-4": [
+   256,
+   256
+  ],
+  "occ-proactive-5": [
+   256,
+   256
+  ],
+  "occ-proactive-6": [
+   256,
+   256
+  ],
+  "occ-proactive-7": [
+   256,
+   256
+  ],
+  "occ-harness-1": [
+   360,
+   360
+  ],
+  "occ-harness-2": [
+   360,
+   360
+  ],
+  "occ-harness-3": [
+   360,
+   360
+  ],
+  "occ-harness-4": [
+   360,
+   360
+  ],
+  "occ-harness-5": [
+   360,
+   360
+  ],
+  "occ-harness-6": [
+   360,
+   360
+  ],
+  "occ-harness-7": [
+   360,
+   360
+  ],
+  "goal_t_budget": [
+   365.8,
+   248.4
+  ],
+  "goal_s_ablation_budget": [
+   365.8,
+   248.4
+  ]
+ }
+}

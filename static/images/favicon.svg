@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>
+    .paper { fill: #f5f7f9; } .target { fill: #9aa6b2; } .explore { fill: #1b65a8; }
+    @media (prefers-color-scheme: dark) {
+      .paper { fill: #121a23; } .target { fill: #56636f; } .explore { fill: #4f97d4; }
+    }
+  </style>
+  <rect class="paper" width="32" height="32" rx="7"/>
+  <rect class="target" x="4" y="10" width="7" height="12" rx="1.5"/>
+  <rect class="explore" x="13" y="10" width="15" height="12" rx="3"/>
+</svg>
