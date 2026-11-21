@@ -421,9 +421,10 @@ def build_videos(manifest: dict, instructions: dict) -> str:
 
 
 # ---------------- 首屏视频墙 ----------------
-# 只取短片段所在的设置：这几组合计约 3.4 MB，首屏全部载入也能接受；
+# 只取短片段所在的设置：这几组合计约 3.9 MB，首屏全部载入也能接受；
 # explore（单段最长 185 s）和 h2h（22 段共 20.7 MB）放进来会让首屏负担翻好几倍。
-WALL_GROUPS = ["goal-t", "object-t", "object-s", "spatial-t", "l10-s"]
+# robocasa 进墙的是每段 6 秒的截取版（约 0.5 MB），完整 rollout 留给案例分析。
+WALL_GROUPS = ["goal-t", "object-t", "object-s", "robocasa", "spatial-t", "l10-s"]
 WALL_ROWS = 11       # 每排是一条斜带；逆时针转 40° 后，十一条才盖得住宽屏首屏的四个角
 WALL_UNIQUE = 14     # 每排 14 段不重复的片子；一份复制件的长度要盖过首屏里最长的一条斜弦
 

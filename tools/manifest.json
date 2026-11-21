@@ -461,6 +461,143 @@
     "duration": 8.2,
     "bytes": 59484
    }
+  ],
+  "robocasa": [
+   {
+    "name": "deliverstraw-seed04",
+    "task": "DeliverStraw",
+    "seed": 4,
+    "duration": 6.0,
+    "bytes": 38979,
+    "source_duration": 42.4,
+    "segment_start": 12.7
+   },
+   {
+    "name": "gettoastedbread-seed02",
+    "task": "GetToastedBread",
+    "seed": 2,
+    "duration": 6.0,
+    "bytes": 16746,
+    "source_duration": 260.9,
+    "segment_start": 78.3
+   },
+   {
+    "name": "kettleboiling-seed05",
+    "task": "KettleBoiling",
+    "seed": 5,
+    "duration": 6.0,
+    "bytes": 40422,
+    "source_duration": 194.2,
+    "segment_start": 58.3
+   },
+   {
+    "name": "loaddishwasher-seed02",
+    "task": "LoadDishwasher",
+    "seed": 2,
+    "duration": 6.0,
+    "bytes": 23204,
+    "source_duration": 35.6,
+    "segment_start": 10.7
+   },
+   {
+    "name": "packidenticallunches-seed05",
+    "task": "PackIdenticalLunches",
+    "seed": 5,
+    "duration": 6.0,
+    "bytes": 27998,
+    "source_duration": 255.2,
+    "segment_start": 76.6
+   },
+   {
+    "name": "presoakpan-seed01",
+    "task": "PreSoakPan",
+    "seed": 1,
+    "duration": 6.0,
+    "bytes": 36866,
+    "source_duration": 50.4,
+    "segment_start": 15.1
+   },
+   {
+    "name": "rinsesinkbasin-seed03",
+    "task": "RinseSinkBasin",
+    "seed": 3,
+    "duration": 6.0,
+    "bytes": 35179,
+    "source_duration": 70.8,
+    "segment_start": 21.2
+   },
+   {
+    "name": "scrubcuttingboard-seed01",
+    "task": "ScrubCuttingBoard",
+    "seed": 1,
+    "duration": 6.0,
+    "bytes": 24480,
+    "source_duration": 50.0,
+    "segment_start": 15.0
+   },
+   {
+    "name": "searingmeat-seed10",
+    "task": "SearingMeat",
+    "seed": 10,
+    "duration": 6.0,
+    "bytes": 31317,
+    "source_duration": 82.8,
+    "segment_start": 24.8
+   },
+   {
+    "name": "setupcuttingstation-seed05",
+    "task": "SetUpCuttingStation",
+    "seed": 5,
+    "duration": 6.0,
+    "bytes": 25558,
+    "source_duration": 90.4,
+    "segment_start": 27.1
+   },
+   {
+    "name": "stackbowlscabinet-seed01",
+    "task": "StackBowlsCabinet",
+    "seed": 1,
+    "duration": 6.0,
+    "bytes": 31390,
+    "source_duration": 30.8,
+    "segment_start": 9.2
+   },
+   {
+    "name": "steaminmicrowave-seed02",
+    "task": "SteamInMicrowave",
+    "seed": 2,
+    "duration": 6.0,
+    "bytes": 45778,
+    "source_duration": 94.3,
+    "segment_start": 28.3
+   },
+   {
+    "name": "stirvegetables-seed07",
+    "task": "StirVegetables",
+    "seed": 7,
+    "duration": 6.0,
+    "bytes": 37076,
+    "source_duration": 83.2,
+    "segment_start": 25.0
+   },
+   {
+    "name": "storeleftoversinbowl-seed45",
+    "task": "StoreLeftoversInBowl",
+    "seed": 45,
+    "duration": 6.0,
+    "bytes": 39803,
+    "source_duration": 70.0,
+    "segment_start": 21.0
+   },
+   {
+    "name": "washlettuce-seed01",
+    "task": "WashLettuce",
+    "seed": 1,
+    "duration": 6.0,
+    "bytes": 23664,
+    "source_duration": 44.0,
+    "segment_start": 13.2
+   }
   ]
  },
  "figures": {

@@ -8,8 +8,9 @@
    写入 static/data/ledger.json。
 
 用法（论文源码包属外部下载内容，务必用 -I 隔离运行）：
-    python -I tools/build_assets.py --videos <视频目录> --eprint <论文源码目录> --ledger <exploration_layers.json>
-三个参数可以只给一部分，只重建对应资源，其余沿用 tools/manifest.json 里的记录。
+    python -I tools/build_assets.py --videos <视频目录> --robocasa <RoboCasa 成功视频目录> \
+        --eprint <论文源码目录> --ledger <exploration_layers.json>
+各参数可以只给一部分，只重建对应资源，其余沿用 tools/manifest.json 里的记录。
 """
 from __future__ import annotations
 
@@ -73,6 +74,50 @@ def build_videos(src_root: Path) -> dict:
                 "bytes": out_video.stat().st_size,
             })
     return manifest
+
+
+# RoboCasa-365 成功 rollout 只截 6 秒进首屏视频带：完整片段最长 260 s，全放会让装饰背景
+# 从约 3.4 MB 涨到 20 MB。段起点取片长 30% 处，避开开头静止与结尾收尾；完整视频留给案例分析。
+ROBOCASA_SEGMENT_SECONDS = 6.0
+ROBOCASA_START_RATIO = 0.3
+
+
+def build_robocasa(src_root: Path) -> list:
+    """把 RoboCasa-365 成功视频切成短视频带片段并生成海报，返回 manifest 条目列表。
+    源视频已是 256×256 / 20 fps，统一重编码到 CRF 30 控制体积。"""
+    entries = []
+    out_dir = STATIC / "videos" / "robocasa"
+    poster_dir = STATIC / "posters" / "robocasa"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    poster_dir.mkdir(parents=True, exist_ok=True)
+    for src in sorted(src_root.glob("*/O_*_success.mp4")):
+        m = re.match(r"O_(.+)_seed(\d+)_success\.mp4$", src.name)
+        if not m:
+            continue
+        task, seed = m.group(1), int(m.group(2))
+        name = f"{task.lower()}-seed{seed:02d}"
+        out_video = out_dir / f"{name}.mp4"
+        out_poster = poster_dir / f"{name}.webp"
+        src_duration = probe_duration(src)
+        start = round(src_duration * ROBOCASA_START_RATIO, 1)
+        if start + ROBOCASA_SEGMENT_SECONDS > src_duration:
+            start = max(0.0, src_duration - ROBOCASA_SEGMENT_SECONDS)
+        run(["ffmpeg", "-y", "-v", "error", "-ss", f"{start:g}", "-t", f"{ROBOCASA_SEGMENT_SECONDS:g}",
+             "-i", str(src), "-map", "0:v:0", "-c:v", "libx264", "-crf", "30", "-preset", "slow",
+             "-pix_fmt", "yuv420p", "-an", "-map_metadata", "-1", "-map_chapters", "-1",
+             "-movflags", "+faststart", str(out_video)])
+        run(["ffmpeg", "-y", "-v", "error", "-ss", f"{start:g}", "-i", str(src), "-frames:v", "1",
+             "-c:v", "libwebp", "-quality", "80", str(out_poster)])
+        entries.append({
+            "name": name,
+            "task": task,
+            "seed": seed,
+            "duration": probe_duration(out_video),
+            "bytes": out_video.stat().st_size,
+            "source_duration": src_duration,
+            "segment_start": start,
+        })
+    return entries
 
 
 def render_pdf_page(pdf: Path, out: Path, width_px: int, page_no: int = 0, clip=None, quality: int = 90) -> tuple[int, int]:
@@ -149,15 +194,18 @@ def build_ledger(ledger_json: Path) -> list:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--videos", type=Path, help="宣传视频目录；省略则沿用 manifest.json 里已有的视频记录")
+    ap.add_argument("--robocasa", type=Path, help="RoboCasa-365 成功视频目录（每段截 6 秒做首屏视频带）")
     ap.add_argument("--eprint", type=Path, help="论文源码目录；省略则沿用已有的图片记录")
     ap.add_argument("--ledger", type=Path, help="exploration_layers.json；省略则不重建账本")
     args = ap.parse_args()
-    if not (args.videos or args.eprint or args.ledger):
-        ap.error("至少给出 --videos、--eprint、--ledger 中的一项")
+    if not (args.videos or args.robocasa or args.eprint or args.ledger):
+        ap.error("至少给出 --videos、--robocasa、--eprint、--ledger 中的一项")
     path = SITE / "tools" / "manifest.json"
     manifest = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
     if args.videos:
         manifest["videos"] = build_videos(args.videos)
+    if args.robocasa:
+        manifest.setdefault("videos", {})["robocasa"] = build_robocasa(args.robocasa)
     if args.eprint:
         manifest["figures"] = build_figures(args.eprint)
     if args.ledger:

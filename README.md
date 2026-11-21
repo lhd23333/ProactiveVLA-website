@@ -10,7 +10,7 @@ static/css/style.css    全部样式，按 @layer reset → tokens → base → 
 static/js/main.js       交互：导航高亮、视频进入视口自动播放、探索账本、视频标签页、复制 BibTeX、首屏视频带
 static/fonts/           Archivo（标题、界面、表格）与 Source Serif 4（正文），latin 子集 woff2
 static/images/          论文图（WebP/SVG）、遮挡对比逐帧图、favicon、分享卡片 og-card.jpg
-static/videos/          仿真视频（约 35 MB）
+static/videos/          仿真视频（约 36 MB，含 RoboCasa 墙格截取片段）
 static/posters/         视频首帧海报
 static/data/ledger.json 探索账本数据
 tools/build_assets.py   生成 static/ 下的视频、海报、论文图和账本数据
@@ -34,10 +34,10 @@ python -m http.server 8000
 1. 重新生成资源（论文源码包属于外部下载内容，用 `-I` 隔离运行）：
 
    ```bash
-   python -I tools/build_assets.py --videos <宣传视频目录> --eprint <论文源码目录> --ledger <exploration_layers.json>
+   python -I tools/build_assets.py --videos <宣传视频目录> --robocasa <RoboCasa 成功视频目录> --eprint <论文源码目录> --ledger <exploration_layers.json>
    ```
 
-   三个参数可以只给一部分，只重建对应资源，其余沿用 `tools/manifest.json` 里的记录。例如只改了论文图：`--eprint <论文源码目录>`。
+   各参数可以只给一部分，只重建对应资源，其余沿用 `tools/manifest.json` 里的记录。例如只改了论文图：`--eprint <论文源码目录>`；只更新 RoboCasa 墙格片段：`--robocasa <RoboCasa 成功视频目录>`。
 
 2. 回填页面：
 
@@ -55,6 +55,7 @@ python -m http.server 8000
 | Exploration 一节的探索账本 | 组内适配日志（LIBERO-Pro Spatial-T，seed 0），论文里没有这份逐场景明细，页面上已注明 |
 | Videos 的 Head-to-head 标签 | 组内 Goal-T 重跑，与表 1 的评测分开，页面上有披露说明，并列出了反方向的 7 个案例 |
 | 其余视频 | 各设置中挑选的成功片段，页面已注明是挑选的 |
+| 首屏视频带的 RoboCasa 片段 | O 组 RoboCasa-365 成功 rollout（2026-11-21 批次）每段截 6 秒，仅作背景装饰；完整视频留作后续案例分析 |
 
 如果不打算公开内部数据：删掉 `index.html` 中 `id="exploration"` 的整节和导航里的 Exploration 链接；Head-to-head 标签从 `build_html.py` 的 `build_videos` 里去掉后重新运行脚本。
 
@@ -70,7 +71,7 @@ python -m http.server 8000
 ## 实现约定
 
 - 浅色、深色跟随系统设置，不设切换按钮。颜色只在 `style.css` 的 tokens 层定义（`light-dark()`），文字与背景的对比度已逐对核对，改色后请重新检查。
-- 首屏是一整幅深色色块（页脚同一套颜色，首尾呼应），标题占满一行；整个首屏背景铺满仿真视频带，由 `build_html.py` 的 `build:wall` 块从 `tools/manifest.json` 生成：十一条斜带、每排 28 格（14 段视频 + 14 张同名海报图作复制件），每条绕自身中心逆时针转 40°，相邻两条反向横移，排距按 `cos 40°` 反推，转过来之后的格子间隙与排内间隙一致，宽屏四角也能盖住。复制件用 `<img>` 而不是第二个 `<video>`，可解码的元素减半；横移只在中间位置左右各走一份复制件的一半（`translateX(±25%)`），整排两端始终留有余量，不会扫到排头露缝。窄屏首屏短，最外侧四条斜带隐藏。只用 5 组短片段共 20 段（约 3.4 MB），`explore`、`h2h` 这类长片段没有放进来。
+- 首屏是一整幅深色色块（页脚同一套颜色，首尾呼应），标题占满一行；整个首屏背景铺满仿真视频带，由 `build_html.py` 的 `build:wall` 块从 `tools/manifest.json` 生成：十一条斜带、每排 28 格（14 段视频 + 14 张同名海报图作复制件），每条绕自身中心逆时针转 40°，相邻两条反向横移，排距按 `cos 40°` 反推，转过来之后的格子间隙与排内间隙一致，宽屏四角也能盖住。复制件用 `<img>` 而不是第二个 `<video>`，可解码的元素减半；横移只在中间位置左右各走一份复制件的一半（`translateX(±25%)`），整排两端始终留有余量，不会扫到排头露缝。窄屏首屏短，最外侧四条斜带隐藏。只用 6 组短片段共 28 段（约 3.0 MB），其中 RoboCasa 每段是 6 秒截取版；`explore`、`h2h` 这类长片段没有放进来。
 - 压暗与取景：视频带左缘用遮罩淡出，标题区让位给纯色底；上面再压一层独立的渐变（左侧最重、右侧留亮，另叠左上冷光、一道约 5% 白色的斜向掠光、底部沉降），保证标题区对比度的同时让右侧透出画面。首屏至少一屏高（`100svh`），正文不会从折线处提前露头。页脚底部同样有一层很轻的渐亮收尾。
 - 正文沿用同一套 40° 语言：每节标题上方一道 40° 的短斜线；Abstract 与 Videos 两节铺满视口的浅蓝色带（内容宽度与其它节严格对齐，靠左右内边距居中，不用负外边距，不会产生横向滚动）带一层纵向渐变与 40° 细斜纹；探索账本选中行、表格里 ProactiveVLA 的行与列也铺同一角度的细斜纹；摘要做成左侧引线 + 略大字号，BibTeX 用深色代码块（右上角一点主题色微光）收尾。
 - 视频带共三百来个格子（其中一半是可播放的 `<video>`），但同时解码的只留 20 个：`main.js` 按当前画面位置挑出离右中部最近的一批播放，其余停在海报帧，左侧被遮罩压掉的格子不参与；离开首屏即全部暂停、横移动画停住；系统要求减少动效或开启省流量时只显示海报帧。视频带是纯装饰，`aria-hidden`，读屏软件跳过。
