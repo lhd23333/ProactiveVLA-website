@@ -473,6 +473,15 @@
     "segment_start": 12.7
    },
    {
+    "name": "deliverstraw-seed04-b",
+    "task": "DeliverStraw",
+    "seed": 4,
+    "duration": 6.0,
+    "bytes": 56767,
+    "source_duration": 42.4,
+    "segment_start": 27.6
+   },
+   {
     "name": "gettoastedbread-seed02",
     "task": "GetToastedBread",
     "seed": 2,
@@ -480,6 +489,15 @@
     "bytes": 16746,
     "source_duration": 260.9,
     "segment_start": 78.3
+   },
+   {
+    "name": "gettoastedbread-seed02-b",
+    "task": "GetToastedBread",
+    "seed": 2,
+    "duration": 6.0,
+    "bytes": 10616,
+    "source_duration": 260.9,
+    "segment_start": 169.6
    },
    {
     "name": "kettleboiling-seed05",
@@ -491,6 +509,15 @@
     "segment_start": 58.3
    },
    {
+    "name": "kettleboiling-seed05-b",
+    "task": "KettleBoiling",
+    "seed": 5,
+    "duration": 6.0,
+    "bytes": 35931,
+    "source_duration": 194.2,
+    "segment_start": 126.2
+   },
+   {
     "name": "loaddishwasher-seed02",
     "task": "LoadDishwasher",
     "seed": 2,
@@ -498,6 +525,15 @@
     "bytes": 23204,
     "source_duration": 35.6,
     "segment_start": 10.7
+   },
+   {
+    "name": "loaddishwasher-seed02-b",
+    "task": "LoadDishwasher",
+    "seed": 2,
+    "duration": 6.0,
+    "bytes": 17477,
+    "source_duration": 35.6,
+    "segment_start": 23.1
    },
    {
     "name": "packidenticallunches-seed05",
@@ -509,6 +545,15 @@
     "segment_start": 76.6
    },
    {
+    "name": "packidenticallunches-seed05-b",
+    "task": "PackIdenticalLunches",
+    "seed": 5,
+    "duration": 6.0,
+    "bytes": 41643,
+    "source_duration": 255.2,
+    "segment_start": 165.9
+   },
+   {
     "name": "presoakpan-seed01",
     "task": "PreSoakPan",
     "seed": 1,
@@ -516,6 +561,15 @@
     "bytes": 36866,
     "source_duration": 50.4,
     "segment_start": 15.1
+   },
+   {
+    "name": "presoakpan-seed01-b",
+    "task": "PreSoakPan",
+    "seed": 1,
+    "duration": 6.0,
+    "bytes": 28379,
+    "source_duration": 50.4,
+    "segment_start": 32.8
    },
    {
     "name": "rinsesinkbasin-seed03",
@@ -527,6 +581,15 @@
     "segment_start": 21.2
    },
    {
+    "name": "rinsesinkbasin-seed03-b",
+    "task": "RinseSinkBasin",
+    "seed": 3,
+    "duration": 6.0,
+    "bytes": 31634,
+    "source_duration": 70.8,
+    "segment_start": 46.0
+   },
+   {
     "name": "scrubcuttingboard-seed01",
     "task": "ScrubCuttingBoard",
     "seed": 1,
@@ -534,6 +597,15 @@
     "bytes": 24480,
     "source_duration": 50.0,
     "segment_start": 15.0
+   },
+   {
+    "name": "scrubcuttingboard-seed01-b",
+    "task": "ScrubCuttingBoard",
+    "seed": 1,
+    "duration": 6.0,
+    "bytes": 23341,
+    "source_duration": 50.0,
+    "segment_start": 32.5
    },
    {
     "name": "searingmeat-seed10",
@@ -545,6 +617,15 @@
     "segment_start": 24.8
    },
    {
+    "name": "searingmeat-seed10-b",
+    "task": "SearingMeat",
+    "seed": 10,
+    "duration": 6.0,
+    "bytes": 37815,
+    "source_duration": 82.8,
+    "segment_start": 53.8
+   },
+   {
     "name": "setupcuttingstation-seed05",
     "task": "SetUpCuttingStation",
     "seed": 5,
@@ -552,6 +633,15 @@
     "bytes": 25558,
     "source_duration": 90.4,
     "segment_start": 27.1
+   },
+   {
+    "name": "setupcuttingstation-seed05-b",
+    "task": "SetUpCuttingStation",
+    "seed": 5,
+    "duration": 6.0,
+    "bytes": 30555,
+    "source_duration": 90.4,
+    "segment_start": 58.8
    },
    {
     "name": "stackbowlscabinet-seed01",
@@ -563,6 +653,15 @@
     "segment_start": 9.2
    },
    {
+    "name": "stackbowlscabinet-seed01-b",
+    "task": "StackBowlsCabinet",
+    "seed": 1,
+    "duration": 6.0,
+    "bytes": 37451,
+    "source_duration": 30.8,
+    "segment_start": 20.0
+   },
+   {
     "name": "steaminmicrowave-seed02",
     "task": "SteamInMicrowave",
     "seed": 2,
@@ -570,6 +669,15 @@
     "bytes": 45778,
     "source_duration": 94.3,
     "segment_start": 28.3
+   },
+   {
+    "name": "steaminmicrowave-seed02-b",
+    "task": "SteamInMicrowave",
+    "seed": 2,
+    "duration": 6.0,
+    "bytes": 39757,
+    "source_duration": 94.3,
+    "segment_start": 61.3
    },
    {
     "name": "stirvegetables-seed07",
@@ -581,6 +689,15 @@
     "segment_start": 25.0
    },
    {
+    "name": "stirvegetables-seed07-b",
+    "task": "StirVegetables",
+    "seed": 7,
+    "duration": 6.0,
+    "bytes": 35483,
+    "source_duration": 83.2,
+    "segment_start": 54.1
+   },
+   {
     "name": "storeleftoversinbowl-seed45",
     "task": "StoreLeftoversInBowl",
     "seed": 45,
@@ -590,6 +707,15 @@
     "segment_start": 21.0
    },
    {
+    "name": "storeleftoversinbowl-seed45-b",
+    "task": "StoreLeftoversInBowl",
+    "seed": 45,
+    "duration": 6.0,
+    "bytes": 64325,
+    "source_duration": 70.0,
+    "segment_start": 45.5
+   },
+   {
     "name": "washlettuce-seed01",
     "task": "WashLettuce",
     "seed": 1,
@@ -597,6 +723,957 @@
     "bytes": 23664,
     "source_duration": 44.0,
     "segment_start": 13.2
+   },
+   {
+    "name": "washlettuce-seed01-b",
+    "task": "WashLettuce",
+    "seed": 1,
+    "duration": 6.0,
+    "bytes": 22314,
+    "source_duration": 44.0,
+    "segment_start": 28.6
+   }
+  ],
+  "wall": [
+   {
+    "name": "scene-00-1",
+    "task": 0,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 32784,
+    "source_group": "explore",
+    "source_duration": 113.5,
+    "segment_start": 17.0
+   },
+   {
+    "name": "scene-00-2",
+    "task": 0,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 25118,
+    "source_group": "explore",
+    "source_duration": 113.5,
+    "segment_start": 34.0
+   },
+   {
+    "name": "scene-00-3",
+    "task": 0,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 24828,
+    "source_group": "explore",
+    "source_duration": 113.5,
+    "segment_start": 51.1
+   },
+   {
+    "name": "scene-00-4",
+    "task": 0,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 28668,
+    "source_group": "explore",
+    "source_duration": 113.5,
+    "segment_start": 68.1
+   },
+   {
+    "name": "scene-00-5",
+    "task": 0,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 32565,
+    "source_group": "explore",
+    "source_duration": 113.5,
+    "segment_start": 85.1
+   },
+   {
+    "name": "scene-01-1",
+    "task": 1,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 12044,
+    "source_group": "explore",
+    "source_duration": 41.9,
+    "segment_start": 6.3
+   },
+   {
+    "name": "scene-01-2",
+    "task": 1,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 20611,
+    "source_group": "explore",
+    "source_duration": 41.9,
+    "segment_start": 12.6
+   },
+   {
+    "name": "scene-01-3",
+    "task": 1,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 20862,
+    "source_group": "explore",
+    "source_duration": 41.9,
+    "segment_start": 18.9
+   },
+   {
+    "name": "scene-01-4",
+    "task": 1,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 29348,
+    "source_group": "explore",
+    "source_duration": 41.9,
+    "segment_start": 25.1
+   },
+   {
+    "name": "scene-01-5",
+    "task": 1,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 37148,
+    "source_group": "explore",
+    "source_duration": 41.9,
+    "segment_start": 31.4
+   },
+   {
+    "name": "scene-02-1",
+    "task": 2,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 17531,
+    "source_group": "explore",
+    "source_duration": 130.1,
+    "segment_start": 19.5
+   },
+   {
+    "name": "scene-02-2",
+    "task": 2,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 22231,
+    "source_group": "explore",
+    "source_duration": 130.1,
+    "segment_start": 39.0
+   },
+   {
+    "name": "scene-02-3",
+    "task": 2,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 24097,
+    "source_group": "explore",
+    "source_duration": 130.1,
+    "segment_start": 58.5
+   },
+   {
+    "name": "scene-02-4",
+    "task": 2,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 28602,
+    "source_group": "explore",
+    "source_duration": 130.1,
+    "segment_start": 78.1
+   },
+   {
+    "name": "scene-02-5",
+    "task": 2,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 33324,
+    "source_group": "explore",
+    "source_duration": 130.1,
+    "segment_start": 97.6
+   },
+   {
+    "name": "scene-03-1",
+    "task": 3,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 25346,
+    "source_group": "explore",
+    "source_duration": 115.5,
+    "segment_start": 17.3
+   },
+   {
+    "name": "scene-03-2",
+    "task": 3,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 32268,
+    "source_group": "explore",
+    "source_duration": 115.5,
+    "segment_start": 34.6
+   },
+   {
+    "name": "scene-03-3",
+    "task": 3,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 21797,
+    "source_group": "explore",
+    "source_duration": 115.5,
+    "segment_start": 52.0
+   },
+   {
+    "name": "scene-03-4",
+    "task": 3,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 29248,
+    "source_group": "explore",
+    "source_duration": 115.5,
+    "segment_start": 69.3
+   },
+   {
+    "name": "scene-03-5",
+    "task": 3,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 25204,
+    "source_group": "explore",
+    "source_duration": 115.5,
+    "segment_start": 86.6
+   },
+   {
+    "name": "scene-04-1",
+    "task": 4,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 28946,
+    "source_group": "explore",
+    "source_duration": 77.0,
+    "segment_start": 11.5
+   },
+   {
+    "name": "scene-04-2",
+    "task": 4,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 33880,
+    "source_group": "explore",
+    "source_duration": 77.0,
+    "segment_start": 23.1
+   },
+   {
+    "name": "scene-04-3",
+    "task": 4,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 22850,
+    "source_group": "explore",
+    "source_duration": 77.0,
+    "segment_start": 34.6
+   },
+   {
+    "name": "scene-04-4",
+    "task": 4,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 26535,
+    "source_group": "explore",
+    "source_duration": 77.0,
+    "segment_start": 46.2
+   },
+   {
+    "name": "scene-04-5",
+    "task": 4,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 24480,
+    "source_group": "explore",
+    "source_duration": 77.0,
+    "segment_start": 57.8
+   },
+   {
+    "name": "scene-05-1",
+    "task": 5,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 32980,
+    "source_group": "explore",
+    "source_duration": 126.0,
+    "segment_start": 18.9
+   },
+   {
+    "name": "scene-05-2",
+    "task": 5,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 31628,
+    "source_group": "explore",
+    "source_duration": 126.0,
+    "segment_start": 37.8
+   },
+   {
+    "name": "scene-05-3",
+    "task": 5,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 29821,
+    "source_group": "explore",
+    "source_duration": 126.0,
+    "segment_start": 56.7
+   },
+   {
+    "name": "scene-05-4",
+    "task": 5,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 20653,
+    "source_group": "explore",
+    "source_duration": 126.0,
+    "segment_start": 75.6
+   },
+   {
+    "name": "scene-05-5",
+    "task": 5,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 30100,
+    "source_group": "explore",
+    "source_duration": 126.0,
+    "segment_start": 94.5
+   },
+   {
+    "name": "scene-06-1",
+    "task": 6,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 26435,
+    "source_group": "explore",
+    "source_duration": 113.8,
+    "segment_start": 17.1
+   },
+   {
+    "name": "scene-06-2",
+    "task": 6,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 26294,
+    "source_group": "explore",
+    "source_duration": 113.8,
+    "segment_start": 34.1
+   },
+   {
+    "name": "scene-06-3",
+    "task": 6,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 25272,
+    "source_group": "explore",
+    "source_duration": 113.8,
+    "segment_start": 51.2
+   },
+   {
+    "name": "scene-06-4",
+    "task": 6,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 27008,
+    "source_group": "explore",
+    "source_duration": 113.8,
+    "segment_start": 68.3
+   },
+   {
+    "name": "scene-06-5",
+    "task": 6,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 26498,
+    "source_group": "explore",
+    "source_duration": 113.8,
+    "segment_start": 85.3
+   },
+   {
+    "name": "scene-07-1",
+    "task": 7,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 19797,
+    "source_group": "explore",
+    "source_duration": 102.3,
+    "segment_start": 15.3
+   },
+   {
+    "name": "scene-07-2",
+    "task": 7,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 24384,
+    "source_group": "explore",
+    "source_duration": 102.3,
+    "segment_start": 30.7
+   },
+   {
+    "name": "scene-07-3",
+    "task": 7,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 28924,
+    "source_group": "explore",
+    "source_duration": 102.3,
+    "segment_start": 46.0
+   },
+   {
+    "name": "scene-07-4",
+    "task": 7,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 27493,
+    "source_group": "explore",
+    "source_duration": 102.3,
+    "segment_start": 61.4
+   },
+   {
+    "name": "scene-07-5",
+    "task": 7,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 26532,
+    "source_group": "explore",
+    "source_duration": 102.3,
+    "segment_start": 76.7
+   },
+   {
+    "name": "scene-08-1",
+    "task": 8,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 26321,
+    "source_group": "explore",
+    "source_duration": 146.4,
+    "segment_start": 22.0
+   },
+   {
+    "name": "scene-08-2",
+    "task": 8,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 28519,
+    "source_group": "explore",
+    "source_duration": 146.4,
+    "segment_start": 43.9
+   },
+   {
+    "name": "scene-08-3",
+    "task": 8,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 22476,
+    "source_group": "explore",
+    "source_duration": 146.4,
+    "segment_start": 65.9
+   },
+   {
+    "name": "scene-08-4",
+    "task": 8,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 28903,
+    "source_group": "explore",
+    "source_duration": 146.4,
+    "segment_start": 87.8
+   },
+   {
+    "name": "scene-08-5",
+    "task": 8,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 33240,
+    "source_group": "explore",
+    "source_duration": 146.4,
+    "segment_start": 109.8
+   },
+   {
+    "name": "scene-09-1",
+    "task": 9,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 29972,
+    "source_group": "explore",
+    "source_duration": 184.8,
+    "segment_start": 27.7
+   },
+   {
+    "name": "scene-09-2",
+    "task": 9,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 36628,
+    "source_group": "explore",
+    "source_duration": 184.8,
+    "segment_start": 55.4
+   },
+   {
+    "name": "scene-09-3",
+    "task": 9,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 21644,
+    "source_group": "explore",
+    "source_duration": 184.8,
+    "segment_start": 83.2
+   },
+   {
+    "name": "scene-09-4",
+    "task": 9,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 36389,
+    "source_group": "explore",
+    "source_duration": 184.8,
+    "segment_start": 110.9
+   },
+   {
+    "name": "scene-09-5",
+    "task": 9,
+    "seed": 0,
+    "duration": 6.0,
+    "bytes": 17473,
+    "source_group": "explore",
+    "source_duration": 184.8,
+    "segment_start": 138.6
+   },
+   {
+    "name": "task-00-seed-02-proactive-1",
+    "task": 0,
+    "seed": 2,
+    "duration": 6.0,
+    "bytes": 34626,
+    "source_group": "h2h",
+    "source_duration": 59.3,
+    "segment_start": 8.9
+   },
+   {
+    "name": "task-00-seed-02-proactive-2",
+    "task": 0,
+    "seed": 2,
+    "duration": 6.0,
+    "bytes": 25729,
+    "source_group": "h2h",
+    "source_duration": 59.3,
+    "segment_start": 20.8
+   },
+   {
+    "name": "task-00-seed-02-proactive-3",
+    "task": 0,
+    "seed": 2,
+    "duration": 6.0,
+    "bytes": 27804,
+    "source_group": "h2h",
+    "source_duration": 59.3,
+    "segment_start": 32.6
+   },
+   {
+    "name": "task-00-seed-02-proactive-4",
+    "task": 0,
+    "seed": 2,
+    "duration": 6.0,
+    "bytes": 31904,
+    "source_group": "h2h",
+    "source_duration": 59.3,
+    "segment_start": 44.5
+   },
+   {
+    "name": "task-00-seed-05-proactive-1",
+    "task": 0,
+    "seed": 5,
+    "duration": 6.0,
+    "bytes": 19950,
+    "source_group": "h2h",
+    "source_duration": 105.8,
+    "segment_start": 15.9
+   },
+   {
+    "name": "task-00-seed-05-proactive-2",
+    "task": 0,
+    "seed": 5,
+    "duration": 6.0,
+    "bytes": 26121,
+    "source_group": "h2h",
+    "source_duration": 105.8,
+    "segment_start": 37.0
+   },
+   {
+    "name": "task-00-seed-05-proactive-3",
+    "task": 0,
+    "seed": 5,
+    "duration": 6.0,
+    "bytes": 31424,
+    "source_group": "h2h",
+    "source_duration": 105.8,
+    "segment_start": 58.2
+   },
+   {
+    "name": "task-00-seed-05-proactive-4",
+    "task": 0,
+    "seed": 5,
+    "duration": 6.0,
+    "bytes": 18870,
+    "source_group": "h2h",
+    "source_duration": 105.8,
+    "segment_start": 79.3
+   },
+   {
+    "name": "task-00-seed-07-proactive-1",
+    "task": 0,
+    "seed": 7,
+    "duration": 6.0,
+    "bytes": 32178,
+    "source_group": "h2h",
+    "source_duration": 319.0,
+    "segment_start": 47.9
+   },
+   {
+    "name": "task-00-seed-07-proactive-2",
+    "task": 0,
+    "seed": 7,
+    "duration": 6.0,
+    "bytes": 32011,
+    "source_group": "h2h",
+    "source_duration": 319.0,
+    "segment_start": 111.6
+   },
+   {
+    "name": "task-00-seed-07-proactive-3",
+    "task": 0,
+    "seed": 7,
+    "duration": 6.0,
+    "bytes": 29845,
+    "source_group": "h2h",
+    "source_duration": 319.0,
+    "segment_start": 175.5
+   },
+   {
+    "name": "task-00-seed-07-proactive-4",
+    "task": 0,
+    "seed": 7,
+    "duration": 6.0,
+    "bytes": 23455,
+    "source_group": "h2h",
+    "source_duration": 319.0,
+    "segment_start": 239.2
+   },
+   {
+    "name": "task-00-seed-09-proactive-1",
+    "task": 0,
+    "seed": 9,
+    "duration": 6.0,
+    "bytes": 28891,
+    "source_group": "h2h",
+    "source_duration": 10.5,
+    "segment_start": 1.6
+   },
+   {
+    "name": "task-00-seed-09-proactive-2",
+    "task": 0,
+    "seed": 9,
+    "duration": 6.0,
+    "bytes": 29537,
+    "source_group": "h2h",
+    "source_duration": 10.5,
+    "segment_start": 3.7
+   },
+   {
+    "name": "task-00-seed-09-proactive-3",
+    "task": 0,
+    "seed": 9,
+    "duration": 6.0,
+    "bytes": 30165,
+    "source_group": "h2h",
+    "source_duration": 10.5,
+    "segment_start": 4.5
+   },
+   {
+    "name": "task-00-seed-09-proactive-4",
+    "task": 0,
+    "seed": 9,
+    "duration": 6.0,
+    "bytes": 30165,
+    "source_group": "h2h",
+    "source_duration": 10.5,
+    "segment_start": 4.5
+   },
+   {
+    "name": "task-02-seed-06-proactive-1",
+    "task": 2,
+    "seed": 6,
+    "duration": 6.0,
+    "bytes": 23640,
+    "source_group": "h2h",
+    "source_duration": 25.5,
+    "segment_start": 3.8
+   },
+   {
+    "name": "task-02-seed-06-proactive-2",
+    "task": 2,
+    "seed": 6,
+    "duration": 6.0,
+    "bytes": 22808,
+    "source_group": "h2h",
+    "source_duration": 25.5,
+    "segment_start": 8.9
+   },
+   {
+    "name": "task-02-seed-06-proactive-3",
+    "task": 2,
+    "seed": 6,
+    "duration": 6.0,
+    "bytes": 22949,
+    "source_group": "h2h",
+    "source_duration": 25.5,
+    "segment_start": 14.0
+   },
+   {
+    "name": "task-02-seed-06-proactive-4",
+    "task": 2,
+    "seed": 6,
+    "duration": 6.0,
+    "bytes": 20089,
+    "source_group": "h2h",
+    "source_duration": 25.5,
+    "segment_start": 19.1
+   },
+   {
+    "name": "task-03-seed-07-proactive-1",
+    "task": 3,
+    "seed": 7,
+    "duration": 6.0,
+    "bytes": 24680,
+    "source_group": "h2h",
+    "source_duration": 73.0,
+    "segment_start": 10.9
+   },
+   {
+    "name": "task-03-seed-07-proactive-2",
+    "task": 3,
+    "seed": 7,
+    "duration": 6.0,
+    "bytes": 19693,
+    "source_group": "h2h",
+    "source_duration": 73.0,
+    "segment_start": 25.5
+   },
+   {
+    "name": "task-03-seed-07-proactive-3",
+    "task": 3,
+    "seed": 7,
+    "duration": 6.0,
+    "bytes": 11774,
+    "source_group": "h2h",
+    "source_duration": 73.0,
+    "segment_start": 40.2
+   },
+   {
+    "name": "task-03-seed-07-proactive-4",
+    "task": 3,
+    "seed": 7,
+    "duration": 6.0,
+    "bytes": 16760,
+    "source_group": "h2h",
+    "source_duration": 73.0,
+    "segment_start": 54.8
+   },
+   {
+    "name": "task-05-seed-01-proactive-1",
+    "task": 5,
+    "seed": 1,
+    "duration": 6.0,
+    "bytes": 21929,
+    "source_group": "h2h",
+    "source_duration": 44.0,
+    "segment_start": 6.6
+   },
+   {
+    "name": "task-05-seed-01-proactive-2",
+    "task": 5,
+    "seed": 1,
+    "duration": 6.0,
+    "bytes": 21937,
+    "source_group": "h2h",
+    "source_duration": 44.0,
+    "segment_start": 15.4
+   },
+   {
+    "name": "task-05-seed-01-proactive-3",
+    "task": 5,
+    "seed": 1,
+    "duration": 6.0,
+    "bytes": 24582,
+    "source_group": "h2h",
+    "source_duration": 44.0,
+    "segment_start": 24.2
+   },
+   {
+    "name": "task-05-seed-01-proactive-4",
+    "task": 5,
+    "seed": 1,
+    "duration": 6.0,
+    "bytes": 20790,
+    "source_group": "h2h",
+    "source_duration": 44.0,
+    "segment_start": 33.0
+   },
+   {
+    "name": "task-06-seed-06-proactive-1",
+    "task": 6,
+    "seed": 6,
+    "duration": 6.0,
+    "bytes": 21876,
+    "source_group": "h2h",
+    "source_duration": 7.8,
+    "segment_start": 1.2
+   },
+   {
+    "name": "task-06-seed-06-proactive-2",
+    "task": 6,
+    "seed": 6,
+    "duration": 6.0,
+    "bytes": 21492,
+    "source_group": "h2h",
+    "source_duration": 7.8,
+    "segment_start": 1.7999999999999998
+   },
+   {
+    "name": "task-06-seed-06-proactive-3",
+    "task": 6,
+    "seed": 6,
+    "duration": 6.0,
+    "bytes": 21492,
+    "source_group": "h2h",
+    "source_duration": 7.8,
+    "segment_start": 1.7999999999999998
+   },
+   {
+    "name": "task-06-seed-06-proactive-4",
+    "task": 6,
+    "seed": 6,
+    "duration": 6.0,
+    "bytes": 21492,
+    "source_group": "h2h",
+    "source_duration": 7.8,
+    "segment_start": 1.7999999999999998
+   },
+   {
+    "name": "task-06-seed-07-proactive-1",
+    "task": 6,
+    "seed": 7,
+    "duration": 6.0,
+    "bytes": 18939,
+    "source_group": "h2h",
+    "source_duration": 17.9,
+    "segment_start": 2.7
+   },
+   {
+    "name": "task-06-seed-07-proactive-2",
+    "task": 6,
+    "seed": 7,
+    "duration": 6.0,
+    "bytes": 16804,
+    "source_group": "h2h",
+    "source_duration": 17.9,
+    "segment_start": 6.3
+   },
+   {
+    "name": "task-06-seed-07-proactive-3",
+    "task": 6,
+    "seed": 7,
+    "duration": 6.0,
+    "bytes": 18297,
+    "source_group": "h2h",
+    "source_duration": 17.9,
+    "segment_start": 9.8
+   },
+   {
+    "name": "task-06-seed-07-proactive-4",
+    "task": 6,
+    "seed": 7,
+    "duration": 6.0,
+    "bytes": 20328,
+    "source_group": "h2h",
+    "source_duration": 17.9,
+    "segment_start": 11.899999999999999
+   },
+   {
+    "name": "task-06-seed-09-proactive-1",
+    "task": 6,
+    "seed": 9,
+    "duration": 6.0,
+    "bytes": 22949,
+    "source_group": "h2h",
+    "source_duration": 32.4,
+    "segment_start": 4.9
+   },
+   {
+    "name": "task-06-seed-09-proactive-2",
+    "task": 6,
+    "seed": 9,
+    "duration": 6.0,
+    "bytes": 31086,
+    "source_group": "h2h",
+    "source_duration": 32.4,
+    "segment_start": 11.3
+   },
+   {
+    "name": "task-06-seed-09-proactive-3",
+    "task": 6,
+    "seed": 9,
+    "duration": 6.0,
+    "bytes": 21230,
+    "source_group": "h2h",
+    "source_duration": 32.4,
+    "segment_start": 17.8
+   },
+   {
+    "name": "task-06-seed-09-proactive-4",
+    "task": 6,
+    "seed": 9,
+    "duration": 6.0,
+    "bytes": 25266,
+    "source_group": "h2h",
+    "source_duration": 32.4,
+    "segment_start": 24.3
+   },
+   {
+    "name": "task-08-seed-09-proactive-1",
+    "task": 8,
+    "seed": 9,
+    "duration": 6.0,
+    "bytes": 26164,
+    "source_group": "h2h",
+    "source_duration": 21.8,
+    "segment_start": 3.3
+   },
+   {
+    "name": "task-08-seed-09-proactive-2",
+    "task": 8,
+    "seed": 9,
+    "duration": 6.0,
+    "bytes": 26554,
+    "source_group": "h2h",
+    "source_duration": 21.8,
+    "segment_start": 7.6
+   },
+   {
+    "name": "task-08-seed-09-proactive-3",
+    "task": 8,
+    "seed": 9,
+    "duration": 6.0,
+    "bytes": 23301,
+    "source_group": "h2h",
+    "source_duration": 21.8,
+    "segment_start": 12.0
+   },
+   {
+    "name": "task-08-seed-09-proactive-4",
+    "task": 8,
+    "seed": 9,
+    "duration": 6.0,
+    "bytes": 26770,
+    "source_group": "h2h",
+    "source_duration": 21.8,
+    "segment_start": 15.8
    }
   ]
  },

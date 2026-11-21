@@ -9,7 +9,7 @@
 
 用法（论文源码包属外部下载内容，务必用 -I 隔离运行）：
     python -I tools/build_assets.py --videos <视频目录> --robocasa <RoboCasa 成功视频目录> \
-        --eprint <论文源码目录> --ledger <exploration_layers.json>
+        --wall-extras --eprint <论文源码目录> --ledger <exploration_layers.json>
 各参数可以只给一部分，只重建对应资源，其余沿用 tools/manifest.json 里的记录。
 """
 from __future__ import annotations
@@ -76,14 +76,26 @@ def build_videos(src_root: Path) -> dict:
     return manifest
 
 
-# RoboCasa-365 成功 rollout 只截 6 秒进首屏视频带：完整片段最长 260 s，全放会让装饰背景
-# 从约 3.4 MB 涨到 20 MB。段起点取片长 30% 处，避开开头静止与结尾收尾；完整视频留给案例分析。
-ROBOCASA_SEGMENT_SECONDS = 6.0
-ROBOCASA_START_RATIO = 0.3
+# 首屏视频带按“每个片段全局最多出现一次”设计：11 排 × 每排 14 段 = 154 个视频位，
+# 素材池需要至少 154 段互不相同的片子。现有 LIBERO 短片段 32 段 + RoboCasa 每条 2 段（30）
+# + explore / h2h(O 成功段) 的墙格截取（94 段），共 156 段，正好覆盖且略有富余。
+# 截取统一 6 秒、CRF 30；完整视频留给 Videos 区与案例分析。
+WALL_SEGMENT_SECONDS = 6.0
+ROBOCASA_START_RATIOS = (0.3, 0.65)
+
+
+def _cut_wall_segment(src: Path, out_video: Path, out_poster: Path, start: float) -> None:
+    """从源视频 start 秒起截 6 秒，重编码为墙格片段，并截取同帧海报。"""
+    run(["ffmpeg", "-y", "-v", "error", "-ss", f"{start:g}", "-t", f"{WALL_SEGMENT_SECONDS:g}",
+         "-i", str(src), "-map", "0:v:0", "-c:v", "libx264", "-crf", "30", "-preset", "slow",
+         "-pix_fmt", "yuv420p", "-an", "-map_metadata", "-1", "-map_chapters", "-1",
+         "-movflags", "+faststart", str(out_video)])
+    run(["ffmpeg", "-y", "-v", "error", "-ss", f"{start:g}", "-i", str(src), "-frames:v", "1",
+         "-c:v", "libwebp", "-quality", "80", str(out_poster)])
 
 
 def build_robocasa(src_root: Path) -> list:
-    """把 RoboCasa-365 成功视频切成短视频带片段并生成海报，返回 manifest 条目列表。
+    """把 RoboCasa-365 成功视频切成两段 6 秒墙格片段并生成海报，返回 manifest 条目列表。
     源视频已是 256×256 / 20 fps，统一重编码到 CRF 30 控制体积。"""
     entries = []
     out_dir = STATIC / "videos" / "robocasa"
@@ -95,28 +107,67 @@ def build_robocasa(src_root: Path) -> list:
         if not m:
             continue
         task, seed = m.group(1), int(m.group(2))
-        name = f"{task.lower()}-seed{seed:02d}"
-        out_video = out_dir / f"{name}.mp4"
-        out_poster = poster_dir / f"{name}.webp"
+        base = f"{task.lower()}-seed{seed:02d}"
         src_duration = probe_duration(src)
-        start = round(src_duration * ROBOCASA_START_RATIO, 1)
-        if start + ROBOCASA_SEGMENT_SECONDS > src_duration:
-            start = max(0.0, src_duration - ROBOCASA_SEGMENT_SECONDS)
-        run(["ffmpeg", "-y", "-v", "error", "-ss", f"{start:g}", "-t", f"{ROBOCASA_SEGMENT_SECONDS:g}",
-             "-i", str(src), "-map", "0:v:0", "-c:v", "libx264", "-crf", "30", "-preset", "slow",
-             "-pix_fmt", "yuv420p", "-an", "-map_metadata", "-1", "-map_chapters", "-1",
-             "-movflags", "+faststart", str(out_video)])
-        run(["ffmpeg", "-y", "-v", "error", "-ss", f"{start:g}", "-i", str(src), "-frames:v", "1",
-             "-c:v", "libwebp", "-quality", "80", str(out_poster)])
-        entries.append({
-            "name": name,
-            "task": task,
-            "seed": seed,
-            "duration": probe_duration(out_video),
-            "bytes": out_video.stat().st_size,
-            "source_duration": src_duration,
-            "segment_start": start,
-        })
+        for idx, ratio in enumerate(ROBOCASA_START_RATIOS):
+            name = base if idx == 0 else f"{base}-{chr(ord('a') + idx)}"
+            out_video = out_dir / f"{name}.mp4"
+            out_poster = poster_dir / f"{name}.webp"
+            start = round(src_duration * ratio, 1)
+            if start + WALL_SEGMENT_SECONDS > src_duration:
+                start = max(0.0, src_duration - WALL_SEGMENT_SECONDS)
+            _cut_wall_segment(src, out_video, out_poster, start)
+            entries.append({
+                "name": name,
+                "task": task,
+                "seed": seed,
+                "duration": probe_duration(out_video),
+                "bytes": out_video.stat().st_size,
+                "source_duration": src_duration,
+                "segment_start": start,
+            })
+    return entries
+
+
+# explore 与 h2h 的完整片段太长，直接进墙会让首屏负担翻几倍；各取几个 6 秒切片，
+# 输出到 static/videos/wall/，只服务首屏背景，不进入 Videos 标签页。
+WALL_EXTRA_RULES = [
+    ("explore", re.compile(r"scene-\d+$"), (0.15, 0.3, 0.45, 0.6, 0.75)),
+    ("h2h", re.compile(r".+-proactive$"), (0.15, 0.35, 0.55, 0.75)),
+]
+
+
+def build_wall_extras() -> list:
+    """从已有 explore / h2h(O 成功) 视频生成墙格截取片段，返回 manifest 条目列表。"""
+    entries = []
+    out_dir = STATIC / "videos" / "wall"
+    poster_dir = STATIC / "posters" / "wall"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    poster_dir.mkdir(parents=True, exist_ok=True)
+    for group, pattern, ratios in WALL_EXTRA_RULES:
+        for src in sorted((STATIC / "videos" / group).glob("*.mp4")):
+            if not pattern.search(src.stem):
+                continue
+            src_duration = probe_duration(src)
+            for idx, ratio in enumerate(ratios, 1):
+                name = f"{src.stem}-{idx}"
+                out_video = out_dir / f"{name}.mp4"
+                out_poster = poster_dir / f"{name}.webp"
+                start = round(src_duration * ratio, 1)
+                if start + WALL_SEGMENT_SECONDS > src_duration:
+                    start = max(0.0, src_duration - WALL_SEGMENT_SECONDS)
+                _cut_wall_segment(src, out_video, out_poster, start)
+                seed_match = re.search(r"seed-(\d+)", src.stem)
+                entries.append({
+                    "name": name,
+                    "task": int(re.search(r"(\d+)", src.stem).group(1)),
+                    "seed": int(seed_match.group(1)) if seed_match else 0,
+                    "duration": probe_duration(out_video),
+                    "bytes": out_video.stat().st_size,
+                    "source_group": group,
+                    "source_duration": src_duration,
+                    "segment_start": start,
+                })
     return entries
 
 
@@ -194,18 +245,21 @@ def build_ledger(ledger_json: Path) -> list:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--videos", type=Path, help="宣传视频目录；省略则沿用 manifest.json 里已有的视频记录")
-    ap.add_argument("--robocasa", type=Path, help="RoboCasa-365 成功视频目录（每段截 6 秒做首屏视频带）")
+    ap.add_argument("--robocasa", type=Path, help="RoboCasa-365 成功视频目录（每条截两段 6 秒做首屏视频带）")
+    ap.add_argument("--wall-extras", action="store_true", help="从已有 explore / h2h(O 成功) 视频生成墙格截取片段")
     ap.add_argument("--eprint", type=Path, help="论文源码目录；省略则沿用已有的图片记录")
     ap.add_argument("--ledger", type=Path, help="exploration_layers.json；省略则不重建账本")
     args = ap.parse_args()
-    if not (args.videos or args.robocasa or args.eprint or args.ledger):
-        ap.error("至少给出 --videos、--robocasa、--eprint、--ledger 中的一项")
+    if not (args.videos or args.robocasa or args.wall_extras or args.eprint or args.ledger):
+        ap.error("至少给出 --videos、--robocasa、--wall-extras、--eprint、--ledger 中的一项")
     path = SITE / "tools" / "manifest.json"
     manifest = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
     if args.videos:
         manifest["videos"] = build_videos(args.videos)
     if args.robocasa:
         manifest.setdefault("videos", {})["robocasa"] = build_robocasa(args.robocasa)
+    if args.wall_extras:
+        manifest.setdefault("videos", {})["wall"] = build_wall_extras()
     if args.eprint:
         manifest["figures"] = build_figures(args.eprint)
     if args.ledger:

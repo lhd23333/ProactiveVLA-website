@@ -421,20 +421,20 @@ def build_videos(manifest: dict, instructions: dict) -> str:
 
 
 # ---------------- 首屏视频墙 ----------------
-# 只取短片段所在的设置：这几组合计约 3.9 MB，首屏全部载入也能接受；
-# explore（单段最长 185 s）和 h2h（22 段共 20.7 MB）放进来会让首屏负担翻好几倍。
-# robocasa 进墙的是每段 6 秒的截取版（约 0.5 MB），完整 rollout 留给案例分析。
-WALL_GROUPS = ["goal-t", "object-t", "object-s", "robocasa", "spatial-t", "l10-s"]
+# 墙按“每个片段全局最多出现一次”设计：11 排 × 每排 14 段 = 154 个视频位，
+# 素材池 156 段（LIBERO 短片段 32 + RoboCasa 每条两段 30 + explore/h2h 墙格截取 94）。
+# explore/h2h 只进 6 秒截取版（wall 组），完整视频仍留给 Videos 区，避免首屏负担翻倍。
+WALL_GROUPS = ["goal-t", "object-t", "object-s", "robocasa", "spatial-t", "l10-s", "wall"]
 WALL_ROWS = 11       # 每排是一条斜带；逆时针转 40° 后，十一条才盖得住宽屏首屏的四个角
-WALL_UNIQUE = 22     # 每排 22 段不重复的片子；与池长 47 互质，相邻斜带不共用片段
+WALL_UNIQUE = 14     # 每排 14 段不重复；池长 156 ≥ 11×14，全墙每段视频最多出现一次
 
 
 def build_wall(manifest: dict) -> str:
     """首屏背景：十一条 40° 倾斜、相邻反向横移的仿真视频带，铺满整个首屏。
     按设置轮转取片，相邻两格不会是同一个任务；每排内容复制一份（第二份用海报图，
     不再排一遍 <video>），复制件长度盖过首屏最长的斜弦，横移时两端始终有余量。
-    池子收下六组全部片段，每排按 WALL_UNIQUE 取连续一段：47 与 22 互质，
-    相邻两排的起手位置相隔 22 格，片段集合不相交，不会出现两条一样的斜带。
+    池子收下全部 156 段，每排取连续 14 段：11 排正好用掉 154 段，每段视频全墙只出现
+    一次（连同同帧海报最多重复一次），相邻斜带必然不共用片段。
     排与排之间的间距由样式里的 --pitch 控制，--k 标出这一排在中线上下第几格。"""
     pairs = [(g, manifest["videos"][g]) for g in WALL_GROUPS]
     pool: list[tuple[str, str]] = []
