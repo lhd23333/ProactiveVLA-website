@@ -426,23 +426,23 @@ def build_videos(manifest: dict, instructions: dict) -> str:
 # robocasa 进墙的是每段 6 秒的截取版（约 0.5 MB），完整 rollout 留给案例分析。
 WALL_GROUPS = ["goal-t", "object-t", "object-s", "robocasa", "spatial-t", "l10-s"]
 WALL_ROWS = 11       # 每排是一条斜带；逆时针转 40° 后，十一条才盖得住宽屏首屏的四个角
-WALL_UNIQUE = 14     # 每排 14 段不重复的片子；一份复制件的长度要盖过首屏里最长的一条斜弦
+WALL_UNIQUE = 22     # 每排 22 段不重复的片子；与池长 47 互质，相邻斜带不共用片段
 
 
 def build_wall(manifest: dict) -> str:
     """首屏背景：十一条 40° 倾斜、相邻反向横移的仿真视频带，铺满整个首屏。
     按设置轮转取片，相邻两格不会是同一个任务；每排内容复制一份（第二份用海报图，
     不再排一遍 <video>），复制件长度盖过首屏最长的斜弦，横移时两端始终有余量。
+    池子收下六组全部片段，每排按 WALL_UNIQUE 取连续一段：47 与 22 互质，
+    相邻两排的起手位置相隔 22 格，片段集合不相交，不会出现两条一样的斜带。
     排与排之间的间距由样式里的 --pitch 控制，--k 标出这一排在中线上下第几格。"""
     pairs = [(g, manifest["videos"][g]) for g in WALL_GROUPS]
     pool: list[tuple[str, str]] = []
     round_no = 0
-    while len(pool) < 2 * WALL_UNIQUE and any(round_no < len(seq) for _, seq in pairs):
+    while any(round_no < len(seq) for _, seq in pairs):
         for group, seq in pairs:
             if round_no < len(seq):
                 pool.append((group, seq[round_no]["name"]))
-                if len(pool) == 2 * WALL_UNIQUE:
-                    break
         round_no += 1
 
     def tile(group: str, name: str) -> str:

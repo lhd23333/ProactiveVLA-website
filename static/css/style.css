@@ -392,8 +392,8 @@
     animation-play-state: paused;
   }
   .hero-wall[data-running="true"] .wall-row { animation-play-state: running; }
-  .wall-row[data-dir="fwd"] { --speed: 96s; }
-  .wall-row[data-dir="rev"] { --speed: 124s; animation-direction: reverse; }
+  .wall-row[data-dir="fwd"] { --speed: 150s; }
+  .wall-row[data-dir="rev"] { --speed: 195s; animation-direction: reverse; }
   @keyframes wall-slide {
     /* 只在中间位置左右各走半份复制件：整排两端始终留着余量，任何时刻都盖满画面，
        不会扫到排头露出空隙。用 alternate 到端点后原地折返，没有跳帧 */
