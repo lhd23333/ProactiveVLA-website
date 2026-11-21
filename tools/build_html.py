@@ -433,17 +433,32 @@ def build_wall(manifest: dict) -> str:
     """首屏背景：十一条 40° 倾斜、相邻反向横移的仿真视频带，铺满整个首屏。
     按设置轮转取片，相邻两格不会是同一个任务；每排内容复制一份（第二份用海报图，
     不再排一遍 <video>），复制件长度盖过首屏最长的斜弦，横移时两端始终有余量。
-    池子收下全部 156 段，每排取连续 14 段：11 排正好用掉 154 段，每段视频全墙只出现
-    一次（连同同帧海报最多重复一次），相邻斜带必然不共用片段。
+    池子收下全部 156 段，RoboCasa 与 LIBERO 按 30:126 均匀交错，每条斜带都同时有两种
+    场景；每排取连续 14 段，11 排正好用掉 154 段，每段视频全墙只出现一次（连同同帧
+    海报最多重复一次），相邻斜带必然不共用片段。
     排与排之间的间距由样式里的 --pitch 控制，--k 标出这一排在中线上下第几格。"""
     pairs = [(g, manifest["videos"][g]) for g in WALL_GROUPS]
-    pool: list[tuple[str, str]] = []
+    grouped: list[tuple[str, str]] = []
     round_no = 0
     while any(round_no < len(seq) for _, seq in pairs):
         for group, seq in pairs:
             if round_no < len(seq):
-                pool.append((group, seq[round_no]["name"]))
+                grouped.append((group, seq[round_no]["name"]))
         round_no += 1
+
+    # 按 RoboCasa : LIBERO 的比例把两类场景均匀交错：每条斜带都同时有厨房与 LIBERO 画面，
+    # 不会出现后几条带子清一色 LIBERO 的情况。LIBERO 内部仍按设置轮转，保持任务多样。
+    robo = [x for x in grouped if x[0] == "robocasa"]
+    libero = [x for x in grouped if x[0] != "robocasa"]
+    pool: list[tuple[str, str]] = []
+    ri = li = 0
+    for i in range(len(grouped)):
+        if ri < len(robo) and (ri + 1) * len(grouped) <= (i + 1) * len(robo):
+            pool.append(robo[ri])
+            ri += 1
+        else:
+            pool.append(libero[li])
+            li += 1
 
     def tile(group: str, name: str) -> str:
         # 装饰性视频：无控件、不可聚焦、不预载，poster 先顶上；播放由 main.js 决定
