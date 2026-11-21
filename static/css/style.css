@@ -1137,6 +1137,62 @@
   .clip .verdict { display: flex; }
   .verdict .status { width: 1rem; height: 1rem; }
 
+  /* 真机 demo：三列并排，右上角用 H/O + 勾叉直接标组别与结果。
+     深色底板和首屏、BibTeX 同一套 slab 语言，让实拍画面从正文里跳出来。 */
+  .real-board {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: clamp(0.75rem, 0.5rem + 1vw, 1.25rem);
+    margin-block-start: 1.75rem;
+    padding: clamp(0.75rem, 0.5rem + 1vw, 1.25rem);
+    border-radius: var(--radius-m);
+    background:
+      repeating-linear-gradient(-40deg, transparent 0 26px, rgb(255 255 255 / 0.035) 26px 27px),
+      var(--slab);
+  }
+  .real-card { position: relative; display: grid; gap: 0.625rem; min-width: 0; }
+  .real-card video {
+    width: 100%;
+    aspect-ratio: 720 / 408;
+    object-fit: cover;
+    border-radius: var(--radius-m);
+    background: var(--rule);
+  }
+  .real-badge {
+    position: absolute;
+    top: 0.625rem;
+    right: 0.625rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.3125rem 0.5rem 0.3125rem 0.625rem;
+    border: 1px solid rgb(255 255 255 / 0.22);
+    border-radius: 999px;
+    background: rgb(7 18 30 / 0.72);
+    color: #fff;
+    font: 600 0.8125rem/1 var(--font-sans);
+    letter-spacing: 0.02em;
+    box-shadow: 0 2px 10px rgb(0 0 0 / 0.28);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+  }
+  .real-badge .status { width: 1.125rem; height: 1.125rem; }
+  .real-caption { display: grid; gap: 0.125rem; color: var(--slab-ink); font-family: var(--font-sans); }
+  .real-caption h3 { font-size: 0.9375rem; font-weight: 600; line-height: 1.35; }
+  .real-caption p {
+    color: color-mix(in oklab, var(--slab-ink) 68%, transparent);
+    font-size: 0.8125rem;
+    line-height: 1.4;
+  }
+  .real-note {
+    max-width: var(--measure);
+    margin-block-start: 1rem;
+    color: var(--ink-3);
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
   /* BibTeX 用深色块收尾，和首屏、页脚呼应；提示气泡同时是 live region，只用 opacity 显隐 */
   .code-block {
     position: relative;

@@ -475,8 +475,12 @@ def build_wall(manifest: dict) -> str:
     for row in range(WALL_ROWS):
         start = (row * WALL_UNIQUE) % len(pool)   # 每排错开取片，相邻两排不重复
         picks = [pool[(start + i) % len(pool)] for i in range(WALL_UNIQUE)]
-        tiles = "".join(tile(g, n) for g, n in picks) + "".join(still(g, n) for g, n in picks)
         direction = "rev" if row % 2 else "fwd"
+        videos = "".join(tile(g, n) for g, n in picks)
+        posters = "".join(still(g, n) for g, n in picks)
+        # 反向排把海报复制件放到前半、视频放到后半，保证两半都落在画面右侧；
+        # 否则反向排的可播放格子全被推到左侧遮罩下，整排看起来像卡住。
+        tiles = posters + videos if direction == "rev" else videos + posters
         k = row - (WALL_ROWS - 1) / 2             # -5 … 5，0 是正中间那排
         rows.append(f'<div class="wall-row" data-dir="{direction}" style="--k:{k:g}">{tiles}</div>')
     return "".join(rows)

@@ -226,8 +226,10 @@ if (wall) {
   // 每排后半段是海报图（复制件），只有 <video> 能播；图始终停在海报帧
   const clips = [...wall.querySelectorAll('video.wall-clip')];
   const onScreen = new Set();
-  const MAX_PLAY = 20;   // 同时解码的视频数上限：格子有三百来个，全开会拖垮显卡
-  let armed = false;     // 先让字体和首屏内容加载，稍后才放行视频请求
+  const MAX_PLAY = 20;        // 同时解码的视频数上限：格子有三百来个，全开会拖垮显卡
+  const MAX_PER_ROW = 3;      // 单排上限，避免 20 个播放名额全被中间几排吃掉
+  let armed = false;          // 先让字体和首屏内容加载，稍后才放行视频请求
+  for (const clip of clips) clip._wallRow = clip.closest('.wall-row');
 
   const sync = () => {
     const go = armed && canAutoplay();
@@ -243,7 +245,25 @@ if (wall) {
       ranked.push([Math.hypot(cx - targetX, cy - targetY), clip]);
     }
     ranked.sort((a, b) => a[0] - b[0]);
-    const chosen = new Set(ranked.slice(0, MAX_PLAY).map(([, clip]) => clip));
+    // 先保证每一排至少有一个在播，再按距离补满；否则斜带一移动，
+    // 播放名额会长期停在同几排，其它排看起来像卡住。
+    const chosen = new Set();
+    const perRow = new Map();
+    for (const [, clip] of ranked) {
+      const row = clip._wallRow;
+      if (perRow.has(row)) continue;
+      chosen.add(clip);
+      perRow.set(row, 1);
+      if (chosen.size >= MAX_PLAY) break;
+    }
+    for (const [, clip] of ranked) {
+      if (chosen.size >= MAX_PLAY) break;
+      const row = clip._wallRow;
+      const n = perRow.get(row) || 0;
+      if (chosen.has(clip) || n >= MAX_PER_ROW) continue;
+      chosen.add(clip);
+      perRow.set(row, n + 1);
+    }
     for (const clip of clips) {
       if (go && chosen.has(clip)) {
         if (clip.paused) clip.play().catch(() => {});   // 拒绝自动播放时停在海报帧
@@ -265,4 +285,7 @@ if (wall) {
 
   setTimeout(() => { armed = true; sync(); }, 800);
   reduceMotion.addEventListener('change', sync);
+  // 斜带一直在动，播放名额要跟着重新分配；否则同几排长期占着名额，其它排停在海报帧。
+  setInterval(() => { if (!document.hidden) sync(); }, 700);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) sync(); });
 }

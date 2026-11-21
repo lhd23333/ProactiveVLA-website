@@ -1750,5 +1750,28 @@
    365.8,
    248.4
   ]
- }
+ },
+ "real_demos": [
+  {
+   "name": "success-1",
+   "source": "片段1.mp4",
+   "speed": 6.0,
+   "duration": 29.0,
+   "bytes": 356019
+  },
+  {
+   "name": "fail-harness",
+   "source": "片段2.mp4",
+   "speed": 6.0,
+   "duration": 25.6,
+   "bytes": 421847
+  },
+  {
+   "name": "success-3",
+   "source": "片段3.mp4",
+   "speed": 6.0,
+   "duration": 30.5,
+   "bytes": 269147
+  }
+ ]
 }

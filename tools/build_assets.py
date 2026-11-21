@@ -6,10 +6,11 @@
 2. 论文图：用 PyMuPDF 从 arXiv 源码包的 PDF 渲染架构图和预算曲线 SVG，并取出遮挡案例 PDF 里嵌入的逐帧原图。
 3. 探索账本：从 exploration_layers.json（UTF-16）抽取 Spatial-T 十个场景的轮数与判定，
    写入 static/data/ledger.json。
+4. 真机 demo：把三段实拍按 6× 压缩到 720 宽并生成海报，写入 static/videos/real 与 static/posters/real。
 
 用法（论文源码包属外部下载内容，务必用 -I 隔离运行）：
     python -I tools/build_assets.py --videos <视频目录> --robocasa <RoboCasa 成功视频目录> \
-        --wall-extras --eprint <论文源码目录> --ledger <exploration_layers.json>
+        --wall-extras --real <真机视频目录> --eprint <论文源码目录> --ledger <exploration_layers.json>
 各参数可以只给一部分，只重建对应资源，其余沿用 tools/manifest.json 里的记录。
 """
 from __future__ import annotations
@@ -82,6 +83,44 @@ def build_videos(src_root: Path) -> dict:
 # 截取统一 6 秒、CRF 30；完整视频留给 Videos 区与案例分析。
 WALL_SEGMENT_SECONDS = 6.0
 ROBOCASA_START_RATIOS = (0.3, 0.65)
+
+# 真机 demo：源片段 154–183 秒，按 6× 压缩到 26–31 秒；720 宽、CRF 28、无音轨。
+# 文件名固定，页面上右上角徽标（O ✓ / H × / O ✓）与这里的映射一一对应。
+REAL_DEMO_SPEED = 6.0
+REAL_DEMOS = [
+    ("片段1.mp4", "success-1"),
+    ("片段2.mp4", "fail-harness"),
+    ("片段3.mp4", "success-3"),
+]
+
+
+def build_real_demos(src_root: Path) -> list:
+    """把三段真机视频按 6× 压缩到 720 宽并生成海报，返回 manifest 条目列表。"""
+    entries = []
+    video_dir = STATIC / "videos" / "real"
+    poster_dir = STATIC / "posters" / "real"
+    video_dir.mkdir(parents=True, exist_ok=True)
+    poster_dir.mkdir(parents=True, exist_ok=True)
+    for src_name, name in REAL_DEMOS:
+        src = src_root / src_name
+        if not src.exists():
+            raise FileNotFoundError(src)
+        out_video = video_dir / f"{name}.mp4"
+        out_poster = poster_dir / f"{name}.webp"
+        run(["ffmpeg", "-y", "-v", "error", "-i", str(src),
+             "-map", "0:v:0", "-vf", f"setpts=PTS/{REAL_DEMO_SPEED:g},fps=30,scale=720:-2:flags=lanczos",
+             "-c:v", "libx264", "-crf", "28", "-preset", "slow", "-pix_fmt", "yuv420p",
+             "-an", "-map_metadata", "-1", "-map_chapters", "-1", "-movflags", "+faststart", str(out_video)])
+        run(["ffmpeg", "-y", "-v", "error", "-i", str(out_video), "-frames:v", "1",
+             "-c:v", "libwebp", "-quality", "80", str(out_poster)])
+        entries.append({
+            "name": name,
+            "source": src_name,
+            "speed": REAL_DEMO_SPEED,
+            "duration": probe_duration(out_video),
+            "bytes": out_video.stat().st_size,
+        })
+    return entries
 
 
 def _cut_wall_segment(src: Path, out_video: Path, out_poster: Path, start: float) -> None:
@@ -247,11 +286,12 @@ def main() -> None:
     ap.add_argument("--videos", type=Path, help="宣传视频目录；省略则沿用 manifest.json 里已有的视频记录")
     ap.add_argument("--robocasa", type=Path, help="RoboCasa-365 成功视频目录（每条截两段 6 秒做首屏视频带）")
     ap.add_argument("--wall-extras", action="store_true", help="从已有 explore / h2h(O 成功) 视频生成墙格截取片段")
+    ap.add_argument("--real", type=Path, help="真机 demo 源视频目录（片段1–3.mp4）；按 6× 压缩并生成海报")
     ap.add_argument("--eprint", type=Path, help="论文源码目录；省略则沿用已有的图片记录")
     ap.add_argument("--ledger", type=Path, help="exploration_layers.json；省略则不重建账本")
     args = ap.parse_args()
-    if not (args.videos or args.robocasa or args.wall_extras or args.eprint or args.ledger):
-        ap.error("至少给出 --videos、--robocasa、--wall-extras、--eprint、--ledger 中的一项")
+    if not (args.videos or args.robocasa or args.wall_extras or args.real or args.eprint or args.ledger):
+        ap.error("至少给出 --videos、--robocasa、--wall-extras、--real、--eprint、--ledger 中的一项")
     path = SITE / "tools" / "manifest.json"
     manifest = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
     if args.videos:
@@ -260,6 +300,9 @@ def main() -> None:
         manifest.setdefault("videos", {})["robocasa"] = build_robocasa(args.robocasa)
     if args.wall_extras:
         manifest.setdefault("videos", {})["wall"] = build_wall_extras()
+    if args.real:
+        # 单独放在 real_demos 下，不进 videos：首屏墙的素材池只从 videos 取，避免误把实拍混进去。
+        manifest["real_demos"] = build_real_demos(args.real)
     if args.eprint:
         manifest["figures"] = build_figures(args.eprint)
     if args.ledger:
@@ -268,6 +311,8 @@ def main() -> None:
     videos = manifest.get("videos", {})
     total = sum(v["bytes"] for g in videos.values() for v in g)
     print(f"videos: {sum(len(g) for g in videos.values())} files, {total / 1e6:.1f} MB")
+    if manifest.get("real_demos"):
+        print("real demos:", ", ".join(f"{d['name']} {d['duration']}s" for d in manifest["real_demos"]))
     print("figures:", manifest.get("figures"))
 
 
